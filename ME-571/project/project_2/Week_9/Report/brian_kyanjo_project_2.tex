@@ -1,0 +1,263 @@
+\documentclass[12pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% packages %%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[all]{xy}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=1.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{psfrag}
+
+
+%%%%%%%%%%%%%%%%%%%%% students data %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\student}{Brian KYANJO }
+\newcommand{\course}{Parallel Scientific Computing}
+\newcommand{\assignment}{2}
+
+%%%%%%%%%%%%%%%%%%% using theorem style %%%%%%%%%%%%%%%%%%%%
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{definition}{Definition}[section] 
+\newtheorem{theorem}{Theorem}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{quest}{Question}[section]
+
+%%%%%%%%%%%%%%  Shortcut for usual set of numbers  %%%%%%%%%%%
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%% title page %%%%%%%%%%%%%%%%%%%%%%%%%%
+	\thispagestyle{empty}
+	\begin{center}
+		\textbf{BOISE STATE UNIVERSITY \\[0.5cm]
+			(BSU, USA)}
+		\vspace{.2cm}
+	\end{center}
+	
+	%%%%%%%%%%%%%%%%%%%%% assignment information %%%%%%%%%%%%%%%%
+	\noindent
+	\rule{17cm}{0.2cm}\\[0.3cm]
+	Name: \student \hfill Project Number: \assignment\\[0.1cm]
+	Course: \course \hfill Date: \today\\
+	\rule{17cm}{0.05cm}
+	\vspace{.2cm}
+
+\section*{Problem description}
+I have worked on two-dimensional solver for diffusion-reaction equations, which occurs often in chemistry, ecology and life sciences. I have  considered the Barkley model1, which consists of two interacting equations:
+
+\begin{equation}
+	\frac{\partial  u}{\partial t} = f(u,v)  +  \nabla ^{2} u
+\end{equation}
+
+\begin{equation}
+	\frac{\partial  v}{\partial t} = g(u,v)
+\end{equation}
+
+\noindent   where u, v are concentrations of two chemical species, and f (u, v) and g(u, v) are the production (reaction) terms for species u, v, respectively. 
+
+\section*{Task 1 - Write a serial code for the Barkley model}
+\begin{enumerate}
+	\item Modify the code from class to solve the Barkley model. \\ 
+	
+	\noindent The code has been modified and Barkley model has been solved. The modified code  named \textbf{barkley.c}  is attached with this report. 
+	
+	\item Parameters $\epsilon = 0.02$, $a = 0.75$, $b = 0.01$, $L = 20$, and $tfinal = 40$ have been used to run the model, and a plots of u at tfinal = 40 has been obtained as shown in the figure \ref{fig:Task1} below;
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"Screenshot 2021-03-16 at 6.23.03 PM"}
+		\caption{Task 1}
+		\label{fig:Task1}
+	\end{figure}
+	
+	The spiral in figure \ref{fig:Task1}, looks like the spiral the question paper.
+	
+	\item Optional - Parameters $\epsilon = 0.02$, $a = 0.75$, $b = 0.02$, $L = 150$, and $tfinal = 40$ have been used to run the model with $N = 100$, and a plots of u at tfinal = 40 has been obtained as shown in the figure \ref{fig:optional} below;
+	
+	\begin{figure}[H] 
+		\centering
+		\includegraphics[width=0.5\linewidth]{"Screenshot 2021-03-16 at 6.38.00 PM"}
+		\caption{Task 1 (optional)}
+		\label{fig:optional}
+	\end{figure}
+	
+\end{enumerate}
+
+	The spiral in figure \ref{fig:optional}, becomes choatic, due to change of parameters.
+	
+	\section*{Task 2 - Parallelization using 2D decomposition}	
+	
+	\begin{enumerate}
+		\item Below is the numbered list of the algorithm
+		
+		\begin{enumerate}
+			\item Initialize MPI and then compute row and column index in the rank grid and grid spacing.
+			\item Allocate buffers and arrays.
+			\item Intialize x,y and array u.
+			\item Start time loop.
+			\item  Initialize Boundary conditions (BC) in fictious cells.
+			\item Go over interior points and then enforce  BC from the fictious cells
+			\item  Start communication by first packing data to send buffers from ghosts.
+			\item Move data to left(101), right(102), botton(103) and top(104) respectively for all ranks using MPI\textunderscore Sendrecv, MPI\textunderscore Send, and MPI\textunderscore Recv.
+			\item Then unpack data from recv buffers to ghosts and then finialize communication.
+			\item Update solution and end the time loop
+			\item Write resul ts and stop.
+		\end{enumerate}
+		
+		\item The program (\textbf{barkley\textunderscore mpi.c}) attached with this report implemenents a MPI\textunderscore Sendrecv, with a combination of MPI\textunderscore Send and MPI\textunderscore Recv.
+		
+		\item The correctness of the code is shown in the figure \ref{fig:Task 2} below by using the parameters in Task1 and obtaining the same plot as shown below.
+		
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.5\linewidth]{"Screenshot 2021-03-16 at 6.51.17 PM"}
+			\caption{}
+			\label{fig:Task 2}
+		\end{figure}
+		
+		\item A strong scaling has been performed with choosing a problem size of $N = 840$, $dt = 0.025$ and $tfinal =10$, as shown in the figure below. Due to cfl issues, i was forced to choose $N = 840$  and number of processors: $1 , 4, 9, 16, 25, 36, 49$ which are square numbers. Beyond this the system becomes unstable, since the Numerical method we are implementing is unstable, so choosing an appropriate dt and N, for large process count is quite challenging. I have tried many options but i ended up stopping on $49$ processors for now. And at that the efficiency is already dropping below $50$\%, which implies that 49 processors are enough for me to run the tasks.
+		
+		  The figures: \ref{fig:speedup_task2} and \ref{fig:efficiency_task2}, represent speed up and efficiency plots for Task 2 strong scaling. 
+		
+		Figure \ref{fig:speedup_task2} depict linear scaling for number of processors:$ 1, 4, 9, 16, $ and $25$ after which scaling drops. This means that the program was perfectly scaled up to $25$ processors then scaling drops.
+		
+		Figure \ref{fig:efficiency_task2} depicts that parallel efficiency decrease with increase in number of processors with a fixed problem size, This is because according to Amdahl's law as the number of processors increases, with a fixed problem size,  for the first resourses, this is due to  load imbalance and overhead, and minimised concurency, hence as the processes increases to large count, parallel efficiency decreases up to below 50%.
+		
+		\begin{figure}[h]
+			\begin{subfigure}[b]{0.5\textwidth}
+				\centering
+				\includegraphics[width=1.0\linewidth]{"speedup"}
+				\caption{}
+				\label{fig:speedup_task2}
+			\end{subfigure}
+			%
+			\begin{subfigure}[b]{0.5\textwidth}
+				\centering
+					\includegraphics[width=1.0\linewidth]{"eff_t2"}
+				\caption{}
+				\label{fig:efficiency_task2}
+			\end{subfigure}
+		\caption{(a) and (b) respectively show speedup and Efficiency plots for strong scaling Task2. }
+		\end{figure}
+		
+	\end{enumerate}
+	
+	
+	
+	\section*{Task 3 - 1D decomposition}	
+	
+	\begin{enumerate}
+		\item The 1D decomposition (\textbf{barkley\textunderscore task3.c}) has been implemented  in the Barkley model and depicted correctness of the results after running the same simulation as in Task 1 and plotting the solution at final time. The plot similar to the taht in Task 1 after uing the same parameters is shown in figure \ref{fig:Task 3} below;
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.5\linewidth]{"Screenshot 2021-03-16 at 6.55.52 PM"}
+			\caption{Task 3}
+			\label{fig:Task 3}
+		\end{figure}
+		
+		\item The strong scaling experiment has been performed using the same problem size as in Task 2. And the strong scaling efficiency for 1D and 2D decomposition are ploted on the same plot as shown in figure \ref{fig:Task3_2} .
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.5\linewidth]{"eff_t3"}
+			\caption{Efficiency plot for both 2D and 1D decomposition.}
+			\label{fig:Task3_2}
+		\end{figure}
+	
+	\item Based on the result (\ref{fig:Task3_2}) in part 2 above,  I would choose 1D decomposition, since it exhibits overall good efficiency even for large processor counts compared to 2D decomposition.
+		
+	\end{enumerate}
+	
+	\newpage
+	\section*{Mastery}	
+	\begin{enumerate}
+		\item The program (\textbf{barkley\textunderscore mastery.c}) using non-blocking communication has been designed.  And below is a numbered list of the algorithm.
+		\begin{enumerate}
+			\item  Start by declaring variables for tracking requests and the intialize MPI.
+			\item Compute row and column index in the rank grid and the grid spacing.
+			\item Allocate arrays and buffers.
+			\item Initialize x, y and array u.
+			\item Start the time loop 
+			\item Initialize Boundary conditions(BC) in ghost cells and then intialize communication by packing data to send buffers.
+			\item Compute neighbour indices. 
+			\item Initialize receives and sends.
+			\item Go over interior points and then enforce  BC by copying values from ghosts.
+			\item Check if communication is complete, if complete, then complete computation at the rank edges.
+			\item Complete computation.
+			\item Update the solution and close the time loop.
+			\item Write out results.
+		\end{enumerate}
+		
+		
+		\item The algorithm for the Barkley model has been implemented and it exibited correctness after running the same simulation as in Task 1. The plot obtained is shown in figure \ref{fig:Mastery} below;
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.5\linewidth]{"Screenshot 2021-03-16 at 7.01.27 PM"}
+			\caption{Mastery}
+			\label{fig:Mastery}
+		\end{figure}
+		
+		\item The strong scaling experiment  has been performed and compared to the results of scalings in Tasks 2 and 3, by ploting all of them on the same plot, as shown in figure \ref{fig:mastery_3}.  
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.5\linewidth]{"eff_mastery"}
+			\caption{Efficiency plot: 2D, 1D, and non blockig }
+			\label{fig:mastery_3}
+		\end{figure}
+		
+		As shown on figure \ref{fig:mastery_3}, non-blocking communication depicts an overall good efficiency through out the run, and maintains it, even for large processor counts, hence an improvement in parallel efficiency. With we can conclude that nonblocking communication perfectly scales the program compared to 2D and 1D.
+		
+		\item For each run in the strong scaling experiment, the time of the computation part of the code behind which you try to hide the communication and, the time from the beginning till the end of the communication steps (excluding the computation that happens after you are done communicating) has been measured. 
+		
+		Both times have been compared by ploting them together on the same plot against N\textunderscore loc$^{2}$ as shown in figure \ref{fig:mastery_4}. 
+		
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.5\linewidth]{"mastery_4"}
+			\caption{Computation and Communication time}
+			\label{fig:mastery_4}
+		\end{figure}
+		
+		Figure \ref{fig:mastery_4}, shows that working on the full grid size without dsicretising it costs more on communication than computation time, as the problem is further discretised, with more processor counts, communication time scales with computation time.
+		
+		The  minimum number of grid points points per process which guarantees a complete hiding of the communication cost is $28224$ grid points.
+		
+		 There is a relation between the relative length of the computation and communication steps and the strong scaling efficiency. Since strong scaling efficiency $\eta$ is gievn by equation \eqref{01}.
+		 
+		 \begin{equation}
+		 	\eta = \frac{\text{serial time($T_1$)}}{\text{parallel time ($T_p$)} * \text{number of processors(nproc)}}
+		 	\label{01}
+		 \end{equation}
+		 
+		 So according to equation \eqref{01} above, the length of computation and communication steps affects parallel time, and since $\eta$ is inversly propotional to $T_p$, therefore a change in $T_p$ greatly affects $\eta$. So computing at the same time communicating which is the non blocking communication, helps alot in obtaining good strong efficiency.
+		
+		 
+		 
+		
+		
+	\end{enumerate}
+	
+\end{document}

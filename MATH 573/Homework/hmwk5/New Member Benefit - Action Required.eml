@@ -1,0 +1,350 @@
+Delivered-To: timfest@gmail.com
+Received: by 2002:a05:7110:5b4:b029:34:466b:daad with SMTP id v20csp3072355gev;
+        Fri, 12 Feb 2021 05:36:31 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJynlzjW2qTa1NfopD6BZA/O/PNxXh6PwelNMRY7YdRfWOQRE3CJoJvgdSuhr0dlSADBYJ8Y
+X-Received: by 2002:a67:7f06:: with SMTP id a6mr1205991vsd.25.1613136991613;
+        Fri, 12 Feb 2021 05:36:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1613136991; cv=none;
+        d=google.com; s=arc-20160816;
+        b=dXsC/ICkaiquw74m2yTGg3oH2lg2sFjPa1f1OZRyDuy8rWR3/V/W8CsYa/DlVAlC0J
+         x1cDh8kEjCw9FHtX/sI94aoBl9O0OrgWpHpyQB3BCCCZLv3RqndzyFZbPWmBOiuEih+u
+         4Nutxs1+n7rsFHlr7dwWDP7KGq2HVkBl9+/ZQJHpmKPZAt1z5QkkrAbeARjredwlxaJq
+         KSlLz8H76LkaG0MPGagzz88tcw9esW2H19xuXqTo7xq+XncbB+gAxgVmP+J+MVXZT3p5
+         pNayVyExPTJa3qsQ7HRFSwtKcWNU3hH2u6zZ4lbVDOrXTe/hcC/p0FDuISpSmocQHeL5
+         OjVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=message-id:mime-version:list-unsubscribe:feedback-id:reply-to
+         :subject:to:from:date:dkim-signature:dkim-signature;
+        bh=0K3oKkw0m3Nsrn1VpYkUEwTha6cIt65pamG4a6mWqeQ=;
+        b=lD6kt7CVWoCRpUGcpxv2cDv+onkNPfHhHWMrukQeWBDh7rQSV6a0ShJA0eOE2oKebm
+         0g8GsY6Ctg5lfSjUibkxz2imiL7ws2SZnl01AgFRaEMHbftDbbWtql4Meql7wcFqiSk5
+         7Lzz+N2CvEeFpcQYBBl/xq9I/XdL7ueAOp4K7FPPBQuQFlxEOADrRd82EdfKr6Kq/SjT
+         tvfxzQ49J5MJkB6gczJxUYgBhQgr7fO1PspuMDX80VHz5PFQUjBXTTcH9C8pIFU7RgxB
+         iV3hFG2DsRoc3ppj5g+xPPfMnQ/BRZMHiuayB4Rk0cK7mzIxW60m0IqEDWRiYRRqKKvq
+         zR0Q==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@siam.org header.s=rmagnet header.b=LqNA5Qjp;
+       dkim=pass header.i=@rmsend.com header.s=fbl header.b=NifpzWvT;
+       spf=pass (google.com: domain of bounce@send.siam.org designates 209.18.93.63 as permitted sender) smtp.mailfrom=bounce@send.siam.org
+Return-Path: <bounce@send.siam.org>
+Received: from send2.mmsend49.com (send2.mmsend49.com. [209.18.93.63])
+        by mx.google.com with ESMTPS id w25si1367982vse.1.2021.02.12.05.36.31
+        for <timfest@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 12 Feb 2021 05:36:31 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce@send.siam.org designates 209.18.93.63 as permitted sender) client-ip=209.18.93.63;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@siam.org header.s=rmagnet header.b=LqNA5Qjp;
+       dkim=pass header.i=@rmsend.com header.s=fbl header.b=NifpzWvT;
+       spf=pass (google.com: domain of bounce@send.siam.org designates 209.18.93.63 as permitted sender) smtp.mailfrom=bounce@send.siam.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=rmagnet; d=siam.org;
+ h=Date:From:To:Subject:Reply-To:List-Unsubscribe:MIME-Version:Content-Type:
+ Message-ID; i=mailer@siam.org;
+ bh=0K3oKkw0m3Nsrn1VpYkUEwTha6cIt65pamG4a6mWqeQ=;
+ b=LqNA5Qjpf1Fv88d4zGb1fuzcuELDdqYt8h+eALgmcDPmQ1ZAy4Vp8MvaGzikFkPo8+37NNot3cMI
+   Cldq3ZWNFzRRWmcqQ4iaRipZPnwAZOI+/9HVT9YsweXjIkLJklNc7u43nVuZyF2IItFPVSIep7DW
+   yfr71lyFl5Nrfe9NzWA=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=fbl; d=rmsend.com;
+ h=Date:From:To:Subject:Reply-To:Feedback-ID:List-Unsubscribe:MIME-Version:
+ Content-Type:Message-ID;
+ bh=0K3oKkw0m3Nsrn1VpYkUEwTha6cIt65pamG4a6mWqeQ=;
+ b=NifpzWvTwc8yhl6t03LKa3yxJZYnNXeaGNTSD5V6k50nWwPA9/5JBUaTiwJ2dHQUGpRZNyD+rZ0h
+   G6tKmBjLrVw5VxkdLpEuSuN4hJqWz0UhZZlJZxkubTQZsW9gougo2psgS1TF/IWycTpax8MQxyRg
+   RyNelHTKQKzoNQb2eRA=
+Received: from RMPMTA03 (172.17.63.3) by send2.mmsend49.com id h4q25u2j0g4j for <timfest@gmail.com>; Fri, 12 Feb 2021 08:36:21 -0500 (envelope-from <bounce@send.siam.org>)
+Date: Fri, 12 Feb 2021 08:36:19 -0500
+From: "SIAM Engage" <mailer@siam.org>
+To: <timfest@gmail.com>
+Subject: New Member Benefit - Action Required
+Reply-To: "Society for Industrial and Applied Mathematics" <mailer@siam.org>
+X-TokenInfo-NoToken:
+x-priority: normal
+x-virtual-mta: mta845
+Feedback-ID: 12870:12870_7155205:12870_50867939:realmagnet
+x-jobid: 50867939
+List-Unsubscribe: <mailto:m19918913-uSIAM-r4437252109-g7155205-j50867939@rmunsubscribe.com>
+X-Bps1: 50022920582
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="_NextPart_000_19918913_2021212_83619196"
+Message-ID: <0.0.0.2C.1D701440CA2CE1E.7C39C@send2.mmsend49.com>
+
+--_NextPart_000_19918913_2021212_83619196
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+http://www.siam.org=20
+
+Dear Tim,
+
+We are extremely excited to announce the launch on February 22 of a new SIA=
+M Member=A0Directory as part of our rollout of SIAM Engage, our new online =
+community! The directory offers our members a fully functional and user-fri=
+endly way to reach out and engage with other members of the SIAM community.=
+ For example, you will have the ability to search and identify new members =
+of your personal network while being able to completely customize your priv=
+acy settings.
+
+Because of this launch, it is especially important that you ensure your inf=
+ormation is updated and your preferences are set up on your membership prof=
+ile!
+
+The first decision you need to make is whether you would like to be include=
+d in the directory. If you navigate to your Communication Preferences page =
+(login required) you will be able to edit that under the "Member Directory"=
+ heading.
+
+If you decide that you want to be included in the directory, please take a =
+few minutes to ensure that your information is updated and accurate. The in=
+formation in your account that will be displayed in Engage is available on =
+the left-hand navigation under the following:
+
+Demographics
+-Name https://my.siam.org/Name
+-Demographics https://my.siam.org/Demographics
+-Addresses https://my.siam.org/Addresses
+-Professional Interests https://my.siam.org/Interests
+
+Employment & Affiliations
+-Employment https://my.siam.org/Employment
+-Educational Background https://my.siam.org/Education
+
+Communication
+-Contact information https://my.siam.org/Contacts
+
+When the Member Directory launches on Engage, you will be given the opportu=
+nity to adjust your privacy settings for each of these pieces of informatio=
+n. You will also be given the opportunity to upload a profile photo and add=
+ a short biography to your Engage profile. All this information will be sto=
+red securely behind a membership login.=20
+
+If you have any questions or comments, or require any assistance at all, pl=
+ease do not hesitate to contact us at engage@siam.org mailto:engage@siam.or=
+g?subject=3DEngage%20Question!=20
+
+Best regards,=20
+
+SIAM Engage Team=20
+
+https://www.facebook.com/SocietyforIndustrialandAppliedMath/?business_id=3D=
+1021629354629952=A0=A0=20
+https://twitter.com/TheSIAMNews=A0 =A0=A0=20
+https://www.youtube.com/user/SIAMConnects=A0 =A0=A0=20
+https://www.linkedin.com/company/9231236=A0 =A0=A0=20
+https://www.siam.org/
+
+Unsubscribe or Update Email Preferences https://my.siam.org/EmailPreferences
+
+Copyright =A9 2021 SIAM, All rights reserved.
+
+Society for Industrial and Applied Mathematics (SIAM) 3600 Market Street, 6=
+th Floor, Philadelphia, PA, 19104-2688 USA Phone: +1 215 382 9800 Fax: +1 2=
+15 386 7999 Use this link to unsubscribe:
+http://www.magnetmail.net/Actions/unsubscribe.cfm?message_id=3D19918913&use=
+r_id=3DSIAM&recipient_id=3D4437252109&email=3Dtimfest@gmail.com&group_id=
+=3D7155205
+
+--_NextPart_000_19918913_2021212_83619196
+Content-Type: text/html; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html><html =0Axmlns=3D"http://www.w3.org/1999/xhtml"><head><meta =
+=0Ahttp-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8"><titl=
+e>Engage Announcement - Message 1 to Renewals</title></head><body =0Astyle=
+=3D"font-family: verdana, sans-serif; font-size: 12px;"><div =0Astyle=3D"di=
+splay:none !important; visibility: hidden !important; opacity: 0 !important=
+; color: transparent !important; height: 0px !important; width: 0px !import=
+ant; font-size:0px; line-height:0; overflow:hidden; mso-hide: all;" width=
+=3D"0" height=3D"0">SIAM Member Directory launches soon, make sure you're r=
+eady for it!</div><div =0Astyle=3D"font-family: verdana, sans-serif; font-s=
+ize: 12px;" align=3D"center" class=3D"he_stage" data-theme=3D"392040" data-=
+color=3D"3" width=3D"100%">=0A  <table =0Astyle=3D"width:650px;margin-botto=
+m:0;" cellspacing=3D"0" cellpadding=3D"0" width=3D"650">=0A   =0A <tbody>=
+=0A     =0A <tr>=0A        <td =0Aalign=3D"left" valign=3D"top" data-zone=
+=3D"vertical container" class=3D"he_nodrop" style=3D"width: 650px;" data-co=
+lor=3D"3">=0A          <table =0Aborder=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D"margin-bottom:0;">=0A           =0A <tbody>=0A             =
+=0A <tr>=0A                <td =0Avalign=3D"top" data-zone=3D"image" style=
+=3D"left: 0px; top: 0px; text-align: center; width: 650px; height: auto;" c=
+lass=3D""><a =0Atarget=3D"_blank" href=3D"http://send.siam.org/link.cfm?r=
+=3DebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3DUleaZ5Q7AAodZH-eSIY4BOPUL9zO_fQOPkoMQjFL=
+ABXhfskem4ndg-0XY7fgNmVz3baujXjREBGiLCRtVWhK8g~~&amp;t=3D=
+2mJsXymiiaA9eI0RKK9NOQ~~" align=3D"center"><img =0Aclass=3D"" src=3D"https://maassets.higherlogi=
+c.com/image/SIAM/Test_Header_1822466.jpg" alt=3D"SIAM logo" border=3D"0" st=
+yle=3D"width: 650px; height: 150px;" width=3D"650" height=3D"150" align=3D"=
+center" hspace=3D"0" vspace=3D"0" draggable=3D"false"></a></td>=0A         =
+     </tr>=0A             =0A <tr>=0A                <td =0Avalign=3D"top" =
+data-zone=3D"text" style=3D"padding: 10px; left: 0px; top: 0px; font-family=
+: verdana, sans-serif; font-size: 12px; width: 630px; height: auto;" class=
+=3D"" data-color=3D"3"><div>=0A<div><span =0Astyle=3D"font-size:14px;"><spa=
+n =0Astyle=3D"font-family:'Montserrat', Verdana, sans-serif;">Dear =
+Tim,</span></span></div>=0A=0A<div>&nbsp;</div>=0A=0A<div><span =0Ast=
+yle=3D"font-size:14px;"><span =0Astyle=3D"font-family:'Montserrat', Verdana=
+, sans-serif;">We are extremely excited to announce the launch on February =
+22 of a new SIAM Member&nbsp;Directory as part of our rollout of SIAM Engag=
+e, our new online community! The directory offers our members a fully funct=
+ional and user-friendly way to reach out and engage with other members of t=
+he SIAM community. For example, you will have the ability to search and ide=
+ntify new members of your personal network while being able to completely c=
+ustomize your privacy settings. </span></span></div>=0A=0A<div>&nbsp;</div>=
+=0A=0A<div><strong><span =0Astyle=3D"font-size:14px;"><span =0Astyle=3D"fon=
+t-family:'Montserrat', Verdana, sans-serif;">Because of this launch, it is =
+especially important that you ensure your information is updated and your p=
+references are set up on your membership profile!</span></span></strong></d=
+iv>=0A=0A<div>&nbsp;</div>=0A=0A<div><span =0Astyle=3D"font-size:14px;"><sp=
+an =0Astyle=3D"font-family:'Montserrat', Verdana, sans-serif;">The first de=
+cision you need to make is whether you would like to be included in the dir=
+ectory. If you navigate to your <a =0Ahref=3D"http://send.siam.org/link.cfm=
+?r=3DebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3D76kXPYicJ_2CE-6aHHcal-EZK3THN2C1JvLq7y=
+HVcmtBgleDvzn0Dd1PMJrRKKc3pyw1tYGNZ6U24-IQV6voeA~~&amp;t=3D=
+2mJsXymiiaA9eI0RKK9NOQ~~" style=3D"text-decoration: underline;" target=3D"_blank">Communicatio=
+n Preferences</a> page (login required) you will be able to edit that under=
+ the &#8220;Member Directory&#8221; heading.</span></span></div>=0A=0A<div>=
+&nbsp;</div>=0A=0A<div><span =0Astyle=3D"font-size:14px;"><span =0Astyle=3D=
+"font-family:'Montserrat', Verdana, sans-serif;">If you decide that you wan=
+t to be included in the directory, please take a few minutes to ensure that=
+ your information is updated and accurate. The information in your account =
+that will be displayed in Engage is available on the left-hand navigation u=
+nder the following:</span></span></div>=0A=0A<div>&nbsp;</div>=0A=0A<div><s=
+pan =0Astyle=3D"font-size:14px;"><span =0Astyle=3D"font-family:'Montserrat'=
+, Verdana, sans-serif;">Demographics</span></span></div>=0A=0A<ul>=0A	<li><=
+span =0Astyle=3D"font-size:14px;"><span =0Astyle=3D"font-family:'Montserrat=
+', Verdana, sans-serif;"><a =0Ahref=3D"http://send.siam.org/link.cfm?r=3D=
+ebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3D-4uvSXkO1AfHqa42qFGcgrj8tLqYjnG7u7qJW89yyOkJd=
+JXCypLRNuohXFWCqI5KqRUipENoV3awJO4Fje8Jqw~~&amp;t=3D2mJsXymiiaA9eI0RKK9NOQ~~" =
+style=3D"text-decoration: underline;" target=3D"_blank">Name</a></span></sp=
+an></li>=0A	<li><span =0Astyle=3D"font-size:14px;"><span =0Astyle=3D"font-f=
+amily:'Montserrat', Verdana, sans-serif;"><a =0Ahref=3D"http://send.siam.or=
+g/link.cfm?r=3DebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3DoduaSM_fERXh1MCqvhShVUBjBaTo=
+t0sPgsw2D1xVOf3H9xVAoimnQBxCQhEnphOGLsAXJJPBGaJGGNb_STBhZQ~~&amp;t=3D=
+2mJsXymiiaA9eI0RKK9NOQ~~" style=3D"text-decoration: underline;" target=3D"_blank">De=
+mographics</a></span></span></li>=0A	<li><span =0Astyle=3D"font-size:14px;"=
+><span =0Astyle=3D"font-family:'Montserrat', Verdana, sans-serif;"><a =0Ahr=
+ef=3D"http://send.siam.org/link.cfm?r=3DebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3Dose=
+xsuI7XxhnNwAfKQxbhUz6XaRdRBx0E8WLEXAtBb4WwLg1Nyx5CqWZC0MgekDlWvvksCtXMIhjWo=
+u_wdX02g~~&amp;t=3D2mJsXymiiaA9eI0RKK9NOQ~~" style=3D"text-decoration: underli=
+ne;" target=3D"_blank">Addresses</a></span></span></li>=0A	<li><span =0Asty=
+le=3D"font-size:14px;"><span =0Astyle=3D"font-family:'Montserrat', Verdana,=
+ sans-serif;"><a =0Ahref=3D"http://send.siam.org/link.cfm?r=3D=
+ebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3DMHS8YPNwFJmvtG5PLG4FYwQ76ShrE9LDDQFGUlwd5Lkvr9k-BafeIAis=
+vSIJC0mlyYrA5xsOv-TrlmQQUnmIqw~~&amp;t=3D2mJsXymiiaA9eI0RKK9NOQ~~" style=3D"te=
+xt-decoration: underline;" target=3D"_blank">Professional Interests</a></sp=
+an></span></li>=0A</ul>=0A=0A<div><span =0Astyle=3D"font-size:14px;"><span =
+=0Astyle=3D"font-family:'Montserrat', Verdana, sans-serif;">Employment &amp=
+; Affiliations</span></span></div>=0A=0A<ul>=0A	<li><span =0Astyle=3D"font-=
+size:14px;"><span =0Astyle=3D"font-family:'Montserrat', Verdana, sans-serif=
+;"><a =0Ahref=3D"http://send.siam.org/link.cfm?r=3DebjQHT-qxGRmjECdc0Im3g~~&a=
+mp;pe=3DDrGeXTOPd5DO-FxhxpMEdu5EApwDh4ObN1kCET-VVpHRAa55Vk9fjSPSs-_ERt6ED-6=
+RRoj6Xfn-4zGClozr2Q~~&amp;t=3D2mJsXymiiaA9eI0RKK9NOQ~~" style=3D"text-decorati=
+on: underline;" target=3D"_blank">Employment</a></span></span></li>=0A	<li>=
+<span =0Astyle=3D"font-size:14px;"><span =0Astyle=3D"font-family:'Montserra=
+t', Verdana, sans-serif;"><a =0Ahref=3D"http://send.siam.org/link.cfm?r=3D=
+ebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3DwAcuuFTU1UNb_VZQ7ZQWWl8eCs3cN-kkks-H5FqixjR5=
+XcYwIQraehwFShlv_L8Liy0lurBz228vsJTR27xeuw~~&amp;t=3D2mJsXymiiaA9eI0RKK9NOQ~~"=
+ style=3D"text-decoration: underline;" target=3D"_blank">Educational Backgr=
+ound</a></span></span></li>=0A</ul>=0A=0A<div><span =0Astyle=3D"font-size:1=
+4px;"><span =0Astyle=3D"font-family:'Montserrat', Verdana, sans-serif;">Com=
+munication</span></span></div>=0A=0A<ul>=0A	<li><span =0Astyle=3D"font-size=
+:14px;"><span =0Astyle=3D"font-family:'Montserrat', Verdana, sans-serif;"><=
+a =0Ahref=3D"http://send.siam.org/link.cfm?r=3DebjQHT-qxGRmjECdc0Im3g~~&amp;pe=
+=3D2VdK4Ny6zXkr5fakc9YbX8aYctwyjJuU4HUCRXj7rYWRr6W3G5piIYg9VMWi6Mx6hf81Fq6N=
+HEh0XMYRNBIpMw~~&amp;t=3D2mJsXymiiaA9eI0RKK9NOQ~~" style=3D"text-decoration: u=
+nderline;" target=3D"_blank">Contact information</a></span></span></li>=0A<=
+/ul>=0A=0A<div><span =0Astyle=3D"font-size:14px;"><span =0Astyle=3D"font-fa=
+mily:'Montserrat', Verdana, sans-serif;">When the Member Directory launches=
+ on Engage, you will be given the opportunity to adjust your privacy settin=
+gs for each of these pieces of information. You will also be given the oppo=
+rtunity to upload a profile photo and add a short biography to your Engage =
+profile. All this information will be stored securely behind a membership l=
+ogin. </span></span></div>=0A=0A<div>&nbsp;</div>=0A=0A<div><span =0Astyle=
+=3D"font-size:14px;"><span =0Astyle=3D"font-family:'Montserrat', Verdana, s=
+ans-serif;">If you have any questions or comments, or require any assistanc=
+e at all, please do not hesitate to contact us at <a =0Ahref=3D"mailto:enga=
+ge@siam.org?subject=3DEngage%20Question" style=3D"text-decoration: underlin=
+e;" target=3D"_blank">engage@siam.org</a>! </span></span></div>=0A=0A<div>&=
+nbsp;</div>=0A=0A<div><span =0Astyle=3D"font-size:14px;"><span =0Astyle=3D"=
+font-family:'Montserrat', Verdana, sans-serif;">Best regards, </span></span=
+></div>=0A=0A<div>&nbsp;</div>=0A=0A<div><span =0Astyle=3D"font-size:14px;"=
+><span =0Astyle=3D"font-family:'Montserrat', Verdana, sans-serif;">SIAM Eng=
+age Team </span></span></div>=0A</div>=0A</td>=0A              </tr>=0A    =
+         =0A <tr>=0A                <td =0Avalign=3D"top" data-zone=3D"text=
+" style=3D"padding: 10px; left: 0px; top: 0px; font-family: verdana, sans-s=
+erif; font-size: 12px; width: 630px; height: auto;" class=3D"">=0A         =
+         <div =0Astyle=3D"text-align: center;"> <a =0Aalign=3D"center" href=
+=3D"http://send.siam.org/link.cfm?r=3DebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3Dr-1qM=
+dA7SVv-6cSof2GGRXGhquu5Gsz35BmpqrZ-fmqk0UASyeuTRxlXXXqEDvWM426sJ5rnTzrD72D0=
+1DKFnQ~~&amp;t=3D2mJsXymiiaA9eI0RKK9NOQ~~" target=3D"_blank"><img =0Aalign=3D"=
+center" alt=3D"fb_icon_222166.png" border=3D"0" draggable=3D"false" height=
+=3D"35" hspace=3D"0" src=3D"https://maassets.higherlogic.com/image/SIAM/fb_=
+icon_222166.png" style=3D"width: 35px; height: 35px;" vspace=3D"0" width=3D=
+"35"></a>&nbsp;&nbsp; <a =0Aalign=3D"center" href=3D"http://send.siam.org/l=
+ink.cfm?r=3DebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3Df0_r25QQ6y8XZHkg6zAdRBcyiYxSdZR=
+uzaYxpSWVfbbA7Mso8G3Ic8uNcJMQqbYPh03eNMl01gEtsZOF0_oGqA~~&amp;t=3D=
+2mJsXymiiaA9eI0RKK9NOQ~~" target=3D"_blank"><img =0Aalign=3D"center" alt=3D"twitter_ico=
+n_222163.png" border=3D"0" draggable=3D"false" height=3D"35" hspace=3D"0" s=
+rc=3D"https://maassets.higherlogic.com/image/SIAM/twitter_icon_222163.png" =
+style=3D"width: 35px; height: 35px;" vspace=3D"0" width=3D"35"></a>&nbsp; &=
+nbsp;&nbsp; <a =0Aalign=3D"center" href=3D"http://send.siam.org/link.cfm?r=
+=3DebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3Dzb2j5tCTLj5ja8dcu8MasawuXkTmsQ-7EHIsR9y1=
+kSuwotrwzG7Z-L-vPe60Q15CEa0rFBAGlaVv09-YDPzQvA~~&amp;t=3D=
+2mJsXymiiaA9eI0RKK9NOQ~~" target=3D"_blank"><img =0Aalign=3D"center" alt=3D"youtube_icon_222164.=
+png" border=3D"0" draggable=3D"false" height=3D"35" hspace=3D"0" src=3D"htt=
+ps://maassets.higherlogic.com/image/SIAM/youtube_icon_222164.png" style=3D"=
+width: 35px; height: 35px;" vspace=3D"0" width=3D"35"></a>&nbsp; &nbsp;&nbs=
+p; <a =0Aalign=3D"center" href=3D"http://send.siam.org/link.cfm?r=3D=
+ebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3DtEUX4wM9e8Dca-QEuia8oP-vKWsEhWewdUgeIx0sUCh-1o_aGE=
+gPIiObdOhQK9pJl_0-8rvMwN7fQDqxYuR8mw~~&amp;t=3D2mJsXymiiaA9eI0RKK9NOQ~~" target=
+=3D"_blank"><img =0Aalign=3D"center" alt=3D"linkedin-icon_224149.png" border=
+=3D"0" draggable=3D"false" height=3D"35" hspace=3D"0" src=3D"https://maasse=
+ts.higherlogic.com/image/SIAM/linkedin-icon-resized_236745.png" style=3D"wi=
+dth: 35px; height: 35px;" vspace=3D"0" width=3D"35"></a>&nbsp; &nbsp;&nbsp;=
+ <a =0Aalign=3D"center" href=3D"http://send.siam.org/link.cfm?r=3D=
+ebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3DFvJg2keJcFkgyx1rWGHyaCSe1UaS_SFJLzERPBMDrefOFZQ6F4Br=
+FjDdvEDARAHdgkBgdyR1QxaUUxZl8-CCWA~~&amp;t=3D2mJsXymiiaA9eI0RKK9NOQ~~" target=
+=3D"_blank"><img =0Aalign=3D"center" alt=3D"website-icon_222165.png" border=
+=3D"0" draggable=3D"false" height=3D"35" hspace=3D"0" src=3D"https://maasse=
+ts.higherlogic.com/image/SIAM/website-icon_222165.png" style=3D"width: 35px=
+; height: 35px;" vspace=3D"0" width=3D"35"></a> </div>=0A                </=
+td>=0A              </tr>=0A             =0A <tr>=0A                <td =0A=
+valign=3D"top" data-zone=3D"text" style=3D"padding: 10px; left: 0px; top: 0=
+px; font-family: verdana, sans-serif; font-size: 12px; width: 630px; height=
+: auto;" class=3D"">=0A                  <div =0Astyle=3D"font-size: 14px; =
+text-align: center;font-family:'Montserrat', Tahoma, sans-serif"> <span =0A=
+style=3D"color:#7f8c8d;"><a =0Ahref=3D"http://send.siam.org/link.cfm?r=3D=
+ebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3DKe6yq8oON2cAAEyDqO03V2fPsRkUhzydmfaq-WdaSIwR4=
+27fgDrmjNUM0L7dL0v7IHZjprtaA4mubOmGb5F9eQ~~&amp;t=3D2mJsXymiiaA9eI0RKK9NOQ~~" =
+style=3D"text-decoration: underline; color: rgb(0, 0, 255);" target=3D"_bla=
+nk">Unsubscribe or Update Email Preferences</a></span> </div>=0A           =
+     </td>=0A              </tr>=0A             =0A <tr>=0A                =
+<td =0Avalign=3D"top" data-zone=3D"text" style=3D"padding: 10px; left: 0px;=
+ top: 0px; font-family: verdana, sans-serif; font-size: 12px; width: 630px;=
+ height: auto;" class=3D"">=0A                  <div =0Astyle=3D"text-align=
+: center;">=0A <em><span =0Astyle=3D"font-size:9.0pt"><span =0Astyle=3D"fon=
+t-family:&quot;Helvetica&quot;,sans-serif"><span =0Astyle=3D"color:#656565"=
+>Copyright =A9 2021 SIAM, All rights reserved.</span></span></span></em> =
+=0A</div>=0A                  <div =0Astyle=3D"text-align: center;"> &nbsp;=
+ </div>=0A                  <div =0Astyle=3D"text-align: center;"> <span =
+=0Astyle=3D"font-size:9.0pt"><span =0Astyle=3D"font-family:&quot;Helvetica&=
+quot;,sans-serif"><span =0Astyle=3D"color:#656565">Society for Industrial a=
+nd Applied Mathematics (SIAM)=0A<br> 3600 Market Street, 6th Floor, Philade=
+lphia, PA, 19104</span></span>=0A                    </span> <span =0Astyle=
+=3D"font-size:9.0pt"><span =0Astyle=3D"font-family:&quot;Cambria Math&quot;=
+,serif"><span =0Astyle=3D"color:#656565">-</span></span>=0A                =
+    </span> <span =0Astyle=3D"font-size:9.0pt"><span =0Astyle=3D"font-famil=
+y:&quot;Helvetica&quot;,sans-serif"><span =0Astyle=3D"color:#656565">2688 U=
+SA=0A<br> Phone: +1 215 382 9800 Fax: +1 215 386 7999 <a =0Ahref=3D"http://=
+send.siam.org/link.cfm?r=3DebjQHT-qxGRmjECdc0Im3g~~&amp;pe=3DXRGlZKNyN09XYTiU=
+T_HFVeoZmOhhXf-qYQH-enK3SGreOeITWeY6fpU_A6RRPyRivbvIcZUYVp7rxTKWMJ9SIg~~&am=
+p;t=3D2mJsXymiiaA9eI0RKK9NOQ~~" style=3D"-ms-text-size-adjust:100%; -webkit-te=
+xt-size-adjust:100%" target=3D"_blank"><strong><span =0Astyle=3D"font-famil=
+y:&quot;Helvetica&quot;,sans-serif"><span =0Astyle=3D"color:#656565">www.si=
+am.org</span></span>=0A                    </strong>=0A                    =
+</a>=0A                    </span>=0A                    </span>=0A        =
+            </span>=0A                  </div>=0A                </td>=0A  =
+            </tr>=0A            </tbody>=0A          </table>=0A        </t=
+d>=0A      </tr>=0A    </tbody>=0A  </table>=0A</div><table =0Acellpadding=
+=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"border-collapse: collapse"=
+><tbody><tr><td><img =0Aheight=3D"1" style=3D"display: block" width=3D"1" b=
+order=3D"0" src=3D"http://send.siam.org/spacer.cfm?tracking_id=3D=
+50022920582&amp;jid=3D50867939"></td></tr></tbody></table></body></html>
+
+--_NextPart_000_19918913_2021212_83619196--

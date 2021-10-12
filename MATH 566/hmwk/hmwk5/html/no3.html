@@ -1,0 +1,195 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>no3</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-03-23"><meta name="DC.source" content="no3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%Cholesky for sparse matrices</span>
+close <span class="string">all</span>;
+clear <span class="string">all</span>;
+
+fprintf(<span class="string">'No.3(a)\n\n'</span>);
+<span class="comment">%Load the matrix</span>
+load <span class="string">bcsstk38</span>;
+A = Problem.A;
+
+fprintf(<span class="string">'Make a spy plot of the matrix A showing its sparsity pattern \n\n'</span>);
+figure(1)
+spy(A)
+title(<span class="string">'Sparsity pattern of A'</span>);
+ylabel(<span class="string">'n'</span>);xlabel(<span class="string">'n'</span>);
+
+fprintf(<span class="string">'Compute the sparsity ratio of A\n\n'</span>);
+
+sparsity_ratio = 1 - nnz(A)/numel(A);
+
+fprintf(<span class="string">'The sparsity ratio is %f \n\n'</span>,sparsity_ratio);
+
+fprintf(<span class="string">'No.3(b)\n\n'</span>);
+<span class="comment">%Compute the Cholesky decomposition of the matrix from part (a)</span>
+R = chol(A);
+
+<span class="comment">%Plot the sparsity pattern of the upper triangular matrix,R, from the decomposition.</span>
+figure(2)
+spy(R)
+title(<span class="string">'Sparsity pattern of the cholesky decomposition of A'</span>);
+ylabel(<span class="string">'n'</span>);xlabel(<span class="string">'n'</span>);
+
+<span class="comment">%Compute the amount of &#8220;fill-in&#8221; from the Cholesky decomposition.</span>
+fillin = nnz(R)/nnz(A);
+fprintf(<span class="string">'The fill-in is %f \n\n'</span>,fillin);
+
+fprintf(<span class="string">'No.3(c)\n\n'</span>);
+s = symrcm(A); S=A(s,s);
+R2 = chol(S);
+fillin2 = nnz(R2)/nnz(S);
+fprintf(<span class="string">'The fill-in of the permuted A is %f \n\n'</span>,fillin2);
+
+fprintf(<span class="string">'The fill-in for the permuted matrix is small than that for the original A.\n\n'</span>)
+
+figure(3)
+spy(S)
+title(<span class="string">'Sparsity pattern of the Permuted A'</span>);
+ylabel(<span class="string">'n'</span>);xlabel(<span class="string">'n'</span>);
+
+figure(4)
+spy(R2)
+title(<span class="string">'Sparsity pattern of Cholesky decomposition of the Permuted matrix A'</span>);
+ylabel(<span class="string">'n'</span>);xlabel(<span class="string">'n'</span>);
+</pre><pre class="codeoutput">No.3(a)
+
+Make a spy plot of the matrix A showing its sparsity pattern 
+
+Compute the sparsity ratio of A
+
+The sparsity ratio is 0.994490 
+
+No.3(b)
+
+The fill-in is 4.738485 
+
+No.3(c)
+
+The fill-in of the permuted A is 4.038452 
+
+The fill-in for the permuted matrix is small than that for the original A.
+
+</pre><img vspace="5" hspace="5" src="no3_01.png" alt=""> <img vspace="5" hspace="5" src="no3_02.png" alt=""> <img vspace="5" hspace="5" src="no3_03.png" alt=""> <img vspace="5" hspace="5" src="no3_04.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Cholesky for sparse matrices
+close all;
+clear all;
+
+fprintf('No.3(a)\n\n');
+%Load the matrix
+load bcsstk38;
+A = Problem.A;
+
+fprintf('Make a spy plot of the matrix A showing its sparsity pattern \n\n');
+figure(1)
+spy(A)
+title('Sparsity pattern of A');
+ylabel('n');xlabel('n');
+
+fprintf('Compute the sparsity ratio of A\n\n');
+
+sparsity_ratio = 1 - nnz(A)/numel(A);
+
+fprintf('The sparsity ratio is %f \n\n',sparsity_ratio);
+
+fprintf('No.3(b)\n\n');
+%Compute the Cholesky decomposition of the matrix from part (a)
+R = chol(A);
+
+%Plot the sparsity pattern of the upper triangular matrix,R, from the decomposition.
+figure(2)
+spy(R)
+title('Sparsity pattern of the cholesky decomposition of A');
+ylabel('n');xlabel('n');
+
+%Compute the amount of “fill-in” from the Cholesky decomposition.
+fillin = nnz(R)/nnz(A);
+fprintf('The fill-in is %f \n\n',fillin);
+
+fprintf('No.3(c)\n\n');
+s = symrcm(A); S=A(s,s);
+R2 = chol(S);
+fillin2 = nnz(R2)/nnz(S);
+fprintf('The fill-in of the permuted A is %f \n\n',fillin2);
+
+fprintf('The fill-in for the permuted matrix is small than that for the original A.\n\n')
+
+figure(3)
+spy(S)
+title('Sparsity pattern of the Permuted A');
+ylabel('n');xlabel('n');
+
+figure(4)
+spy(R2)
+title('Sparsity pattern of Cholesky decomposition of the Permuted matrix A');
+ylabel('n');xlabel('n');
+##### SOURCE END #####
+--></body></html>

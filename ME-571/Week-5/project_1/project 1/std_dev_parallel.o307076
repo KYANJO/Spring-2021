@@ -1,0 +1,8 @@
+mean,sigma
+nproc = 1, mu = 4.999913e-01, sigma = 2.886671e-01,elapsed_timer = 10.847608
+nproc = 2, mu = 5.000114e-01, sigma = 2.886719e-01,elapsed_timer = 5.621049
+nproc = 4, mu = 4.999851e-01, sigma = 2.886677e-01,elapsed_timer = 2.988099
+nproc = 8, mu = 5.000201e-01, sigma = 2.886826e-01,elapsed_timer = 1.539187
+nproc = 16, mu = 5.000063e-01, sigma = 2.886733e-01,elapsed_timer = 0.827202
+nproc = 32, mu = 5.001123e-01, sigma = 2.886908e-01,elapsed_timer = 0.441136
+nproc = 64, mu = 5.004578e-01, sigma = 2.886765e-01,elapsed_timer = 0.232195

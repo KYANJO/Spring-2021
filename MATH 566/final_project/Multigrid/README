@@ -1,0 +1,40 @@
+************************************************
+Multigrid Solver for scalar elliptic linear PDEs
+************************************************
+
+Type 'mg_menu' to set up a graphical user interface. 
+If you do not like GUIs, start with mg_script.
+
+The PDE specifications need to have the format used by the PDE toolbox. The 
+geometry description 'g' and the boundary condition description 'b' can 
+either be the name of a function file (see the Matlab help to pdegeom and 
+pdebound for g and b, respectively) or matrices (see decsg and assemb, 
+respectively). 
+
+See the individual files for details. 
+
+******************************************************************************
+File               *  Usage
+******************************************************************************
+mg_menu.m          *  GUI.
+mg_script.m        *  Script file if no GUI should be used.
+mg_main.m          *  Main file containing the refinement and solution 
+                   *  procedures. 
+mg_alg.m           *  Contains the multigrid algorithm.
+dirichlet_flags.m  *  Creates Dirichlet flags for the FE nodes. 
+get_edges.m        *  Obtains information about the FE edges.
+gs.m               *  SOR smoother.
+interpolate.m      *  Realization of the interpolation operator.
+jacobi.m           *  Jacobi smoother.
+restrict.m         *  Realization of the restriction operator.
+******************************************************************************
+
+************************
+VERSION 1.0
+DATE 25.3.2004
+EMAIL bernd@flemisch.net
+************************
+
+
+
+

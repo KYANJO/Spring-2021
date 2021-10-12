@@ -1,0 +1,13 @@
+#!/bin/bash
+###
+###
+#SBATCH --time=12:00:00
+#SBATCH --tasks=1
+#SBATCH --partition=shortq
+#SBATCH --job-name=fdiff
+#SBATCH --output=fdiff.o%j
+
+module load gcc
+module load openmpi
+
+mpiexec -np 1 ./finite_difference 10000000

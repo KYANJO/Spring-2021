@@ -1,0 +1,4 @@
+scp -r /Users/mathadmin/Documents/phd-course-work/spring_2021/ME-571/Week-3 bkyanjo@r2-login.boisestate.edu:/home/bkyanjo
+
+
+scp bkyanjo@r2-login:/home/bkyanjo/Week-4-1/standard_deviation_exercise/std_dev_mpi.c . 

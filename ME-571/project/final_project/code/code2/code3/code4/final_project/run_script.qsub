@@ -1,0 +1,19 @@
+#!/bin/bash
+###
+###
+#SBATCH --time=00:10:00
+#SBATCH --tasks=1
+#SBATCH --job-name=cuda
+#SBATCH --output=output.o%j
+#SBATCH -p gpuq
+
+echo "N,I,Error,time" >> task3.csv
+for q in 3 4 5 6 7 8 9 10
+do
+    ./mc_task3 $((10**$q)) >> task3.csv
+done
+
+status=$?
+if [ $status -ne 0 ]; then
+    exit $status
+fi

@@ -1,0 +1,189 @@
+\documentclass[12pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+ \usepackage{graphicx}
+\usepackage[]{babel}
+\usetheme{Madrid}
+\begin{document}
+	\author{Brian KYANJO \\ Boise State University}
+	\title{Riemann Problem for Linear Scale Advection Equation (LSAE)}
+	%\subtitle{}
+	%\logo{}
+	%\institute{}
+	%\date{}
+	%\subject{}
+	%\setbeamercovered{transparent}
+	%\setbeamertemplate{navigation symbols}{}
+	\begin{frame}[plain]
+		\maketitle
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Contents}
+		\begin{itemize}
+			\item Introduction
+			\item Bahaviour of a discontinuity
+			\item Flux at the interface
+			\item Approximations
+			%\item Interpolation
+			\item Applications
+		\end{itemize}
+	\end{frame}
+
+\begin{frame}
+	\frametitle{Introduction}
+    
+    	 \textbf{Riemann Problem}: is a specific intial value problem  (Cauchy problem) of a PDE that consists of conservation equations combined with piecewise constant intial data which has a single discontinuity in the domain of interest.
+    \pause
+    Consider a linear scalar advection equation.
+    \begin{equation}
+    	q_{t} + a q_{x} = 0
+    \end{equation}
+	 
+	 \begin{equation}
+	 	q(x,0) = h(x)  = \begin{cases}
+	 		q_{L}, & \text{if $x \le 0,$}\\
+	 		q_{R},& \text{if $x > 0,$}\\
+	 		
+	 	\end{cases}       
+	 \end{equation}
+ \pause
+	where $q_{R}$ and $q_{L}$ are two piecewise constant states separated by a discontinuity.
+	\end{frame}
+
+\begin{frame}
+	\frametitle{Continuation}
+	Applying method of characteristics to the IVP gives  equation of the trajectory characteristic curve.
+	
+	$$x = x_{o} + at $$
+	\pause 
+	This is used to obtainthe exact solution of the Riemann problem
+	\begin{equation}
+		q(x,t) = h(x-at)  = \begin{cases}
+			q_{L}, & \text{if $x - at \le 0,$}\\
+			q_{R},& \text{if $x - at > 0,$}\\
+			
+		\end{cases}       
+	\end{equation}
+	%\pause
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Continuation}
+		% TODO: \usepackage{graphicx} required
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.7\linewidth]{"../screenshoots/Screenshot 2021-02-11 at 2.49.24 AM"}
+		\caption{Sketch of the exact solution of the Riemann problem for the lSAE for $a > 0$.}
+		\label{fig:exact_solution}
+	\end{figure}
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Continuation}
+	Solving the IVP by changing to Lagrangian coordinates 
+	$$\dfrac{dx}{dt} = a \quad \text{(ODE)} \quad x(0) = x_{o}$$
+	Considering a = 1, we obtain two descriptions: Eulerian and Lagrangian
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Continuation}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{"../screenshoots/Screenshot 2021-02-11 at 3.07.29 AM"}
+		\caption{Eulerian description (on the left) and the Lagrangian description (on the right)}
+		\label{fig:screenshot-2021-02-11-at-3}
+	\end{figure}
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bahaviour of a discontinuity}
+	\textbf{Reimann Solver:} Is a numerical method used to solve a Riemann Problem.  
+	
+	\pause
+	They are heavily  used in: 
+	\begin{itemize}
+		\item Computational Fluid Dynamics 
+		\item Computational Magnetohydro Dynamics.
+	\end{itemize}
+	\pause
+	Consider using Finite volume to the solution using approximate volume averages.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Continuation}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.7\linewidth]{"../screenshoots/Screenshot 2021-02-11 at 11.40.36 AM"}
+		\caption{Approximate of Volume averages}
+		\label{fig:screenshot-2021-02-11-at-11}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Continuation}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.7\linewidth]{"../screenshoots/Screenshot 2021-02-11 at 11.40.09 AM"}
+		\caption{Flux reconstruction}
+		\label{fig:screenshot-2021-02-11-at-11}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Continuation}
+	The Fundamental similarity between the two cases is that, in both cases, the correct flux, is the flux after an infinestimal time.
+\end{frame}
+\begin{frame}
+	\frametitle{Approximations}
+	
+	\textbf{Reiman Solvers include:}
+	\begin{itemize}
+		\item Linear Riemann Solver  (ROE) - Fast, medium accuracy
+		\item Harten-Laxvan-Leer Solver (HLL)  - Problems with contact discontiniuities
+		\item  Two-Shock Reimann Solver - Problems with entropy waves
+	\end{itemize}
+\end{frame}
+
+%\begin{frame}
+%	\frametitle{Interpolation}
+%	\begin{itemize}
+	%	\item Linear  (numerical stability)
+%		\item Parabolic 
+	%	\item High order
+%	\end{itemize}
+	
+%\end{frame}
+
+\begin{frame}
+	\frametitle{Applications}
+	\begin{itemize}
+		\item Shock capturing
+		\item Study of Heating, viscosity
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{References}
+	\begin{itemize}
+		\item https://www.ita.uni-heidelberg.de/~dullemond/lectures/num\textunderscore fluid\textunderscore 2011/Chapter\textunderscore7.pdf
+		\item Advanced Numerical Methods for Hyperbolic Equations and Applications Lecture notes by Michael Dumbser.
+	\end{itemize}
+	    
+	    
+	
+	
+	
+\end{frame}
+
+\end{document}

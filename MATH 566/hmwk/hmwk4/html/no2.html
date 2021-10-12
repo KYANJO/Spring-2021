@@ -1,0 +1,560 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>no2</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-03-01"><meta name="DC.source" content="no2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+
+
+<span class="comment">%Rank-deficient problems and regularization</span>
+<span class="comment">%Consider a 2pi periodic signal x(t) sampled at the N equally spaced points</span>
+<span class="comment">%tj = hj</span>
+
+N = 256;
+delta = 0.1;
+
+j = [0:N-1]';
+h = 2*pi/N;
+tj = h*j;
+
+<span class="comment">%periodic version of the Gaussian function</span>
+k = @(t,delta) (1/(delta*sqrt(2*pi)))*exp(-(2-(2*cos(t)))/(2*delta^2));
+
+aj = h*k(tj,delta);
+
+fprintf(<span class="string">'2a). Construct A and compute its condition number. \n\n'</span>);
+<span class="comment">%matrix A</span>
+A = circulant([aj]);
+
+<span class="comment">%condition number</span>
+kapa = cond(A);
+fprintf(<span class="string">'The condition number of A is: %e \n\n'</span>,kapa);
+
+fprintf(<span class="string">'2b). Construct vector x. \n\n'</span>);
+<span class="comment">%vector x</span>
+X = zeros(N,1);
+<span class="keyword">for</span> j = 1:N
+    X(j) = signal(tj(j));
+<span class="keyword">end</span>
+
+<span class="comment">%Compute the blurred signal b</span>
+b = A*X;
+
+<span class="comment">%Make a plot of x vs t and b vs t</span>
+figure(1)
+plot(tj,X,<span class="string">'-*'</span>)
+hold <span class="string">on</span>
+plot(tj,b,<span class="string">'-o'</span>)
+legend(<span class="string">'x'</span>,<span class="string">'b'</span>);
+xlabel(<span class="string">'t'</span>); ylabel(<span class="string">'x &amp; b'</span>);
+title(<span class="string">'A plot of x and b vs t'</span>);
+
+fprintf(<span class="string">'2c). Solve Axbar = b  \n\n'</span>);
+xbar = A\b;
+figure(2)
+plot(tj,X,<span class="string">'linewidth'</span>,3)
+hold <span class="string">on</span>
+plot(tj,xbar,<span class="string">'linewidth'</span>,1)
+hold <span class="string">on</span>
+plot(tj,b,<span class="string">'linewidth'</span>,1)
+legend(<span class="string">'x'</span>,<span class="string">'xbar'</span>,<span class="string">'b'</span>);
+xlabel(<span class="string">'t'</span>); ylabel(<span class="string">'x &amp; b'</span>);
+title(<span class="string">'A plot of x and b vs t'</span>);
+
+fprintf(<span class="string">'xbar doesnot look anything close to x, since A is ill conditioned, xbar has alot of noise. \n \n'</span>);
+
+fprintf(<span class="string">'2d). Compute a reduced rank least squares solution  \n\n'</span>);
+
+[u,s,v] = svd(A);
+
+<span class="comment">%sigular values</span>
+sigma = [];
+U = [];
+V = [];
+<span class="keyword">for</span> i = 1:N
+   sig = s(i,i);
+   <span class="keyword">if</span> sig &gt;= 1e-12
+      sigma = [sigma,sig];
+      U = [U,u(:,i)];
+      V = [V,v(:,i)];
+      <span class="keyword">continue</span>
+   <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%compute xtilda</span>
+xtilda = rls(sigma,U,V,b);
+
+<span class="comment">%plot</span>
+figure(3)
+plot(tj,xtilda,<span class="string">'linewidth'</span>,2)
+hold <span class="string">on</span>
+plot(tj,X,<span class="string">'linewidth'</span>,1)
+hold <span class="string">on</span>
+plot(tj,b,<span class="string">'--'</span>,<span class="string">'linewidth'</span>,2)
+legend(<span class="string">'x^{~}'</span>,<span class="string">'x'</span>,<span class="string">'b'</span>);
+xlabel(<span class="string">'t'</span>); ylabel(<span class="string">'x &amp; b'</span>);
+title(<span class="string">'A plot of x^{~}, x, and b vs t'</span>);
+
+fprintf(<span class="string">'The reduced rank least squares solution ,xhat, fits the data much better than xbar. \n\n'</span>);
+
+fprintf(<span class="string">'2e).Use ridge regression \n\n'</span>);
+
+<span class="comment">%compute xhat</span>
+mu1 = 1e-4; mu2 = 1e-2; mu3 = 1;
+xhat1 = ridge(mu1,s,u,v,b,N);
+xhat2 = ridge(mu2,s,u,v,b,N);
+xhat3 = ridge(mu3,s,u,v,b,N);
+<span class="comment">%plot</span>
+figure(4)
+plot(tj,xhat1,<span class="string">'linewidth'</span>,2)
+hold <span class="string">on</span>
+plot(tj,xhat2,<span class="string">'linewidth'</span>,2)
+hold <span class="string">on</span>
+plot(tj,xhat3,<span class="string">'linewidth'</span>,2)
+hold <span class="string">on</span>
+plot(tj,X,<span class="string">'linewidth'</span>,2)
+hold <span class="string">on</span>
+plot(tj,b,<span class="string">'--'</span>,<span class="string">'linewidth'</span>,2)
+legend(<span class="string">'xhat1'</span>,<span class="string">'xhat2'</span>,<span class="string">'xhat3'</span>,<span class="string">'x'</span>,<span class="string">'b'</span>);
+xlabel(<span class="string">'t'</span>); ylabel(<span class="string">'xhat,x &amp; b'</span>);
+title(<span class="string">'A plot of xhat(varying mu), x, and b vs t'</span>);
+
+fprintf(<span class="string">'According to the plot above, the small the value of the regularization parameter the better the \n approximation, as its seen for mu = 1, the solution is completely off.\n\n'</span>);
+
+fprintf(<span class="string">'Xhat perfomance inturns of approximation depends on parameter, mu, so if we select a good parameter, \n then it approximates better than the rest\n\n'</span>);
+
+fprintf(<span class="string">'2f). Repeat (c) - (e) by perturbing each entry of b \n\n'</span>);
+
+b = b + 1e-5*randn(N,1);
+fprintf(<span class="string">'Repeated 2c). \n\n'</span>);
+xbar = A\b;
+figure(5)
+plot(tj,X,<span class="string">'linewidth'</span>,3)
+hold <span class="string">on</span>
+plot(tj,xbar,<span class="string">'linewidth'</span>,1)
+hold <span class="string">on</span>
+plot(tj,b,<span class="string">'linewidth'</span>,1)
+legend(<span class="string">'x'</span>,<span class="string">'xbar'</span>,<span class="string">'b'</span>);
+xlabel(<span class="string">'t'</span>); ylabel(<span class="string">'x &amp; b'</span>);
+title(<span class="string">'A plot of x and perturbed b vs t'</span>);
+
+fprintf(<span class="string">'xbar depicts alot of noise compared to x and b, this is due to the pertubation caused at b'</span>)
+
+fprintf(<span class="string">'Repeated 2d). Compute a reduced rank least squares solution  \n\n'</span>);
+b = A*X;
+b = b + 1e-5*randn(N,1);
+<span class="comment">%compute xtilda</span>
+xtilda = rls(sigma,U,V,b);
+
+<span class="comment">%plot</span>
+figure(6)
+plot(tj,xtilda,<span class="string">'linewidth'</span>,2)
+hold <span class="string">on</span>
+plot(tj,X,<span class="string">'linewidth'</span>,1)
+hold <span class="string">on</span>
+plot(tj,b,<span class="string">'--'</span>,<span class="string">'linewidth'</span>,2)
+legend(<span class="string">'x^{~}'</span>,<span class="string">'x'</span>,<span class="string">'b'</span>);
+xlabel(<span class="string">'t'</span>); ylabel(<span class="string">'x &amp; b'</span>);
+title(<span class="string">'A plot of x^{~}, x, and perturbed b vs t'</span>);
+
+fprintf(<span class="string">'The reduced rank least squares solution ,xhat, also exibits noise as xbar, but in large amplitudes. \n\n'</span>);
+
+fprintf(<span class="string">'Repeated 2e).Use ridge regression \n\n'</span>);
+b = A*X;
+b = b + 1e-5*randn(N,1);
+
+<span class="comment">%compute xhat</span>
+mu1 = 1e-4; mu2 = 1e-2; mu3 = 1;
+xhat1 = ridge(mu1,s,u,v,b,N);
+xhat2 = ridge(mu2,s,u,v,b,N);
+xhat3 = ridge(mu3,s,u,v,b,N);
+<span class="comment">%plot</span>
+figure(7)
+plot(tj,xhat1,<span class="string">'linewidth'</span>,2)
+hold <span class="string">on</span>
+plot(tj,xhat2,<span class="string">'linewidth'</span>,2)
+hold <span class="string">on</span>
+plot(tj,xhat3,<span class="string">'linewidth'</span>,2)
+hold <span class="string">on</span>
+plot(tj,X,<span class="string">'linewidth'</span>,2)
+hold <span class="string">on</span>
+plot(tj,b,<span class="string">'--'</span>,<span class="string">'linewidth'</span>,2)
+legend(<span class="string">'xhat1'</span>,<span class="string">'xhat2'</span>,<span class="string">'xhat3'</span>,<span class="string">'x'</span>,<span class="string">'b'</span>);
+xlabel(<span class="string">'t'</span>); ylabel(<span class="string">'xhat,x &amp; b'</span>);
+title(<span class="string">'A plot of xhat(varying mu), x, and perturbed b vs t'</span>);
+
+fprintf(<span class="string">'Pertubing b, does not affect xhat, due to obtaining the same plots, before and after perturbing b\n\n'</span>);
+
+fprintf(<span class="string">'According to the plot above, the small the value of the regularization parameter the better the \n approximation, as its seen for mu = 1, the solution is completely off.\n\n'</span>);
+
+fprintf(<span class="string">'Xhat perfomance inturns of approximation depends on parameter, mu, so if we select a good parameter, \n then it approximates better than the rest\n\n'</span>);
+
+
+
+
+<span class="comment">%ridge regression solution</span>
+<span class="keyword">function</span> xhat = ridge(mu,s,u,v,b,N)
+
+    xhat = 0;
+    <span class="keyword">for</span> j = 1:N
+        s = diag(s);
+        xhat = xhat + ((s(j)./((s(j).^2)+mu)).*(u(:,j)'*b)).*v(:,j);
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+<span class="comment">%Reduced rank least squares solution</span>
+<span class="keyword">function</span> xtilda = rls(sigma,U,V,b)
+    r = length(sigma);
+    xtilda = 0;
+    <span class="keyword">for</span> j = 1:r
+        xtilda = xtilda + ((U(:,j)'*b)./sigma(j)).*V(:,j);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+
+<span class="comment">%periodic signal</span>
+<span class="keyword">function</span> [x] = signal(t)
+
+    <span class="keyword">if</span> abs(t-pi) &lt; pi/2
+        x = 1 - (2/pi)*abs(t-pi);
+    <span class="keyword">else</span>
+        x = 0;
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">2a). Construct A and compute its condition number. 
+
+The condition number of A is: 1.144935e+16 
+
+2b). Construct vector x. 
+
+2c). Solve Axbar = b  
+
+Warning: Matrix is close to singular or badly scaled. Results may be
+inaccurate. RCOND =  6.559665e-17. 
+xbar doesnot look anything close to x, since A is ill conditioned, xbar has alot of noise. 
+ 
+2d). Compute a reduced rank least squares solution  
+
+The reduced rank least squares solution ,xhat, fits the data much better than xbar. 
+
+2e).Use ridge regression 
+
+According to the plot above, the small the value of the regularization parameter the better the 
+ approximation, as its seen for mu = 1, the solution is completely off.
+
+Xhat perfomance inturns of approximation depends on parameter, mu, so if we select a good parameter, 
+ then it approximates better than the rest
+
+2f). Repeat (c) - (e) by perturbing each entry of b 
+
+Repeated 2c). 
+
+Warning: Matrix is close to singular or badly scaled. Results may be
+inaccurate. RCOND =  6.559665e-17. 
+xbar depicts alot of noise compared to x and b, this is due to the pertubation caused at bRepeated 2d). Compute a reduced rank least squares solution  
+
+The reduced rank least squares solution ,xhat, also exibits noise as xbar, but in large amplitudes. 
+
+Repeated 2e).Use ridge regression 
+
+Pertubing b, does not affect xhat, due to obtaining the same plots, before and after perturbing b
+
+According to the plot above, the small the value of the regularization parameter the better the 
+ approximation, as its seen for mu = 1, the solution is completely off.
+
+Xhat perfomance inturns of approximation depends on parameter, mu, so if we select a good parameter, 
+ then it approximates better than the rest
+
+</pre><img vspace="5" hspace="5" src="no2_01.png" alt=""> <img vspace="5" hspace="5" src="no2_02.png" alt=""> <img vspace="5" hspace="5" src="no2_03.png" alt=""> <img vspace="5" hspace="5" src="no2_04.png" alt=""> <img vspace="5" hspace="5" src="no2_05.png" alt=""> <img vspace="5" hspace="5" src="no2_06.png" alt=""> <img vspace="5" hspace="5" src="no2_07.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+clear all
+close all
+
+
+%Rank-deficient problems and regularization
+%Consider a 2pi periodic signal x(t) sampled at the N equally spaced points
+%tj = hj
+
+N = 256;
+delta = 0.1;
+
+j = [0:N-1]'; 
+h = 2*pi/N;
+tj = h*j;
+
+%periodic version of the Gaussian function
+k = @(t,delta) (1/(delta*sqrt(2*pi)))*exp(-(2-(2*cos(t)))/(2*delta^2));
+
+aj = h*k(tj,delta);
+
+fprintf('2a). Construct A and compute its condition number. \n\n');
+%matrix A
+A = circulant([aj]);
+
+%condition number 
+kapa = cond(A);
+fprintf('The condition number of A is: %e \n\n',kapa);
+
+fprintf('2b). Construct vector x. \n\n');
+%vector x
+X = zeros(N,1);
+for j = 1:N
+    X(j) = signal(tj(j));
+end
+
+%Compute the blurred signal b
+b = A*X;
+
+%Make a plot of x vs t and b vs t
+figure(1)
+plot(tj,X,'-*')
+hold on
+plot(tj,b,'-o')
+legend('x','b');
+xlabel('t'); ylabel('x & b');
+title('A plot of x and b vs t');
+
+fprintf('2c). Solve Axbar = b  \n\n');
+xbar = A\b;
+figure(2)
+plot(tj,X,'linewidth',3)
+hold on
+plot(tj,xbar,'linewidth',1)
+hold on
+plot(tj,b,'linewidth',1)
+legend('x','xbar','b');
+xlabel('t'); ylabel('x & b');
+title('A plot of x and b vs t');
+
+fprintf('xbar doesnot look anything close to x, since A is ill conditioned, xbar has alot of noise. \n \n');
+
+fprintf('2d). Compute a reduced rank least squares solution  \n\n');
+
+[u,s,v] = svd(A);
+
+%sigular values
+sigma = [];
+U = [];
+V = [];
+for i = 1:N
+   sig = s(i,i);
+   if sig >= 1e-12
+      sigma = [sigma,sig];
+      U = [U,u(:,i)];
+      V = [V,v(:,i)];
+      continue
+   end
+end
+
+%compute xtilda
+xtilda = rls(sigma,U,V,b);
+
+%plot
+figure(3)
+plot(tj,xtilda,'linewidth',2)
+hold on
+plot(tj,X,'linewidth',1)
+hold on
+plot(tj,b,'REPLACE_WITH_DASH_DASH','linewidth',2)
+legend('x^{~}','x','b');
+xlabel('t'); ylabel('x & b');
+title('A plot of x^{~}, x, and b vs t');
+
+fprintf('The reduced rank least squares solution ,xhat, fits the data much better than xbar. \n\n');
+
+fprintf('2e).Use ridge regression \n\n');
+
+%compute xhat
+mu1 = 1e-4; mu2 = 1e-2; mu3 = 1;
+xhat1 = ridge(mu1,s,u,v,b,N);
+xhat2 = ridge(mu2,s,u,v,b,N);
+xhat3 = ridge(mu3,s,u,v,b,N);
+%plot
+figure(4)
+plot(tj,xhat1,'linewidth',2)
+hold on
+plot(tj,xhat2,'linewidth',2)
+hold on
+plot(tj,xhat3,'linewidth',2)
+hold on
+plot(tj,X,'linewidth',2)
+hold on
+plot(tj,b,'REPLACE_WITH_DASH_DASH','linewidth',2)
+legend('xhat1','xhat2','xhat3','x','b');
+xlabel('t'); ylabel('xhat,x & b');
+title('A plot of xhat(varying mu), x, and b vs t');
+
+fprintf('According to the plot above, the small the value of the regularization parameter the better the \n approximation, as its seen for mu = 1, the solution is completely off.\n\n');
+
+fprintf('Xhat perfomance inturns of approximation depends on parameter, mu, so if we select a good parameter, \n then it approximates better than the rest\n\n');
+
+fprintf('2f). Repeat (c) - (e) by perturbing each entry of b \n\n');
+
+b = b + 1e-5*randn(N,1);
+fprintf('Repeated 2c). \n\n');
+xbar = A\b;
+figure(5)
+plot(tj,X,'linewidth',3)
+hold on
+plot(tj,xbar,'linewidth',1)
+hold on
+plot(tj,b,'linewidth',1)
+legend('x','xbar','b');
+xlabel('t'); ylabel('x & b');
+title('A plot of x and perturbed b vs t');
+
+fprintf('xbar depicts alot of noise compared to x and b, this is due to the pertubation caused at b')
+
+fprintf('Repeated 2d). Compute a reduced rank least squares solution  \n\n');
+b = A*X;
+b = b + 1e-5*randn(N,1);
+%compute xtilda
+xtilda = rls(sigma,U,V,b);
+
+%plot
+figure(6)
+plot(tj,xtilda,'linewidth',2)
+hold on
+plot(tj,X,'linewidth',1)
+hold on
+plot(tj,b,'REPLACE_WITH_DASH_DASH','linewidth',2)
+legend('x^{~}','x','b');
+xlabel('t'); ylabel('x & b');
+title('A plot of x^{~}, x, and perturbed b vs t');
+
+fprintf('The reduced rank least squares solution ,xhat, also exibits noise as xbar, but in large amplitudes. \n\n');
+
+fprintf('Repeated 2e).Use ridge regression \n\n');
+b = A*X;
+b = b + 1e-5*randn(N,1);
+
+%compute xhat
+mu1 = 1e-4; mu2 = 1e-2; mu3 = 1;
+xhat1 = ridge(mu1,s,u,v,b,N);
+xhat2 = ridge(mu2,s,u,v,b,N);
+xhat3 = ridge(mu3,s,u,v,b,N);
+%plot
+figure(7)
+plot(tj,xhat1,'linewidth',2)
+hold on
+plot(tj,xhat2,'linewidth',2)
+hold on
+plot(tj,xhat3,'linewidth',2)
+hold on
+plot(tj,X,'linewidth',2)
+hold on
+plot(tj,b,'REPLACE_WITH_DASH_DASH','linewidth',2)
+legend('xhat1','xhat2','xhat3','x','b');
+xlabel('t'); ylabel('xhat,x & b');
+title('A plot of xhat(varying mu), x, and perturbed b vs t');
+
+fprintf('Pertubing b, does not affect xhat, due to obtaining the same plots, before and after perturbing b\n\n');
+
+fprintf('According to the plot above, the small the value of the regularization parameter the better the \n approximation, as its seen for mu = 1, the solution is completely off.\n\n');
+
+fprintf('Xhat perfomance inturns of approximation depends on parameter, mu, so if we select a good parameter, \n then it approximates better than the rest\n\n');
+
+
+
+
+%ridge regression solution
+function xhat = ridge(mu,s,u,v,b,N)
+
+    xhat = 0;
+    for j = 1:N
+        s = diag(s);
+        xhat = xhat + ((s(j)./((s(j).^2)+mu)).*(u(:,j)'*b)).*v(:,j);
+    end
+
+end
+
+%Reduced rank least squares solution
+function xtilda = rls(sigma,U,V,b)
+    r = length(sigma);
+    xtilda = 0;
+    for j = 1:r
+        xtilda = xtilda + ((U(:,j)'*b)./sigma(j)).*V(:,j);
+    end
+end
+
+
+%periodic signal
+function [x] = signal(t)
+
+    if abs(t-pi) < pi/2
+        x = 1 - (2/pi)*abs(t-pi);
+    else
+        x = 0;
+    end
+    
+end
+
+##### SOURCE END #####
+--></body></html>

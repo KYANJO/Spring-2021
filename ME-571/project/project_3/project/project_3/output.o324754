@@ -1,0 +1,5 @@
+N = 32	 Elapsed time = 0.000191
+powerIterationOnGPU <<<(1,1), (32,1)>>> elapsed 0.000583 sec
+host 0.000000 gpu 0.987593, err = inf
+Arrays do not match.
+

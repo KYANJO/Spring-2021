@@ -1,0 +1,202 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>no4</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-24"><meta name="DC.source" content="no4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%Stability of linear systems.</span>
+
+fprintf(<span class="string">'4a).\n'</span>);
+<span class="comment">%(a).Does this imply that x&#710; is close to the exact solution x?</span>
+fprintf(<span class="string">'No, since the residual values are not near zero, then xhat is not close to the exact solution. \n\n'</span>);
+
+fprintf(<span class="string">'4b).\n'</span>);
+<span class="comment">%Matrix A</span>
+A = 1./hankel(2:6,6:10);
+
+<span class="comment">%vector b</span>
+b = [0.882 0.744 0.618 0.521 0.447]';
+
+<span class="comment">%Accurate solution to the system</span>
+x = A\b
+
+fprintf(<span class="string">'\n'</span>);
+fprintf(<span class="string">'4c).\n'</span>);
+<span class="comment">%Obtain a condition number for A using this same software again</span>
+<span class="comment">%condition number</span>
+C = cond(A)
+fprintf(<span class="string">'Since the Condition number of A is large then the system is ill-conditioned, therefore a small perturbation \n to the RHS can lead to large change ib the system. \n\n'</span>)
+
+fprintf(<span class="string">'Consider a small perturbation on, db. \n'</span>);
+
+db = [0.000002 0.000004 0.000008 0.00001 0.00007]'
+
+R1=C*norm(db,2)/norm(b,2)
+
+<span class="comment">%ddx due to perturbation on the RHS</span>
+ddx = x + A\db
+
+<span class="comment">%Relative error</span>
+RE = norm((ddx-x),2)/norm(x,2)
+
+fprintf(<span class="string">'Since the relative Error,RE&lt;=R1, and large then indeed this confirms that a very small residual\n after the system being perturbed on the RHS, is big enough to allow for the solution to be as far away. \n'</span>)
+</pre><pre class="codeoutput">4a).
+No, since the residual values are not near zero, then xhat is not close to the exact solution. 
+
+4b).
+
+x =
+
+  -2.520000000000023
+   5.040000000000505
+   2.519999999998072
+   7.560000000002508
+ -10.080000000001057
+
+
+4c).
+
+C =
+
+     1.535043895304634e+06
+
+Since the Condition number of A is large then the system is ill-conditioned, therefore a small perturbation 
+ to the RHS can lead to large change ib the system. 
+
+Consider a small perturbation on, db. 
+
+db =
+
+   1.0e-04 *
+
+   0.020000000000000
+   0.040000000000000
+   0.080000000000000
+   0.100000000000000
+   0.700000000000000
+
+
+R1 =
+
+  74.051562320624924
+
+
+ddx =
+
+  -2.145300000001764
+   0.551040000023523
+  18.217919999913303
+ -13.361039999880891
+  -0.667800000054639
+
+
+RE =
+
+   2.007030225261566
+
+Since the relative Error,RE&lt;=R1, and large then indeed this confirms that a very small residual
+ after the system being perturbed on the RHS, is big enough to allow for the solution to be as far away. 
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Stability of linear systems.
+
+fprintf('4a).\n');
+%(a).Does this imply that xˆ is close to the exact solution x?
+fprintf('No, since the residual values are not near zero, then xhat is not close to the exact solution. \n\n');
+
+fprintf('4b).\n');
+%Matrix A
+A = 1./hankel(2:6,6:10);
+
+%vector b
+b = [0.882 0.744 0.618 0.521 0.447]';
+
+%Accurate solution to the system
+x = A\b
+
+fprintf('\n'); 
+fprintf('4c).\n');
+%Obtain a condition number for A using this same software again
+%condition number 
+C = cond(A)
+fprintf('Since the Condition number of A is large then the system is ill-conditioned, therefore a small perturbation \n to the RHS can lead to large change ib the system. \n\n')
+ 
+fprintf('Consider a small perturbation on, db. \n');
+
+db = [0.000002 0.000004 0.000008 0.00001 0.00007]'
+
+R1=C*norm(db,2)/norm(b,2)
+
+%ddx due to perturbation on the RHS
+ddx = x + A\db
+
+%Relative error
+RE = norm((ddx-x),2)/norm(x,2)
+
+fprintf('Since the relative Error,RE<=R1, and large then indeed this confirms that a very small residual\n after the system being perturbed on the RHS, is big enough to allow for the solution to be as far away. \n')
+
+##### SOURCE END #####
+--></body></html>

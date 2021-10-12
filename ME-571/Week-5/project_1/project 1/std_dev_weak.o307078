@@ -1,0 +1,70 @@
+nproc,sigma_1,elapsed_time,time_comput,time_comm,time_bcast,time_scatter,time_allreduce,time_reduce
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./std_dev_mpi
+Node: r2-cpu-27
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./std_dev_mpi
+Node: r2-cpu-27
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+2 total processes failed to start
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./std_dev_mpi
+Node: r2-cpu-27
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+4 total processes failed to start
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./std_dev_mpi
+Node: r2-cpu-27
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+8 total processes failed to start
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./std_dev_mpi
+Node: r2-cpu-27
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+16 total processes failed to start
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./std_dev_mpi
+Node: r2-cpu-27
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+32 total processes failed to start
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./std_dev_mpi
+Node: r2-cpu-27
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+56 total processes failed to start

@@ -1,0 +1,443 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>testFdPoisson</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-31"><meta name="DC.source" content="testFdPoisson.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Plot solution</a></li><li><a href="#3">Plot solution</a></li><li><a href="#4">Plot solution</a></li><li><a href="#5">Plot solution</a></li><li><a href="#6">Plot solution</a></li></ul></div><pre class="codeinput"><span class="comment">% Script for testing fd2poisson over the square [a,b]x[a,b]</span>
+a = 0; b = 1;
+
+<span class="comment">% Laplacian(u) = f</span>
+f = @(x,y) 10*pi^2*(1+cos(4*pi*(x+2*y))-2*sin(2*pi*(x+2*y))).*exp(sin(2*pi*(x+2*y)));
+<span class="comment">% u = g on Boundary</span>
+g = @(x,y) exp(sin(2*pi*(x+2*y)));
+
+<span class="comment">% Exact solution is g.</span>
+uexact = @(x,y) g(x,y);
+
+<span class="comment">% Compute and time the solution</span>
+k1    = zeros(1,3);
+h1    = zeros(1,3);
+m1    = zeros(1,3);
+t     = zeros(1,3);
+t_sor = zeros(1,3);
+t_sp  = zeros(1,3);
+t_dst = zeros(1,3);
+t_mg  = zeros(1,3);
+
+t1   = [];
+tsor = [];
+tsp  = [];
+tdst = [];
+tmg  = [];
+<span class="keyword">for</span> ii = 1:3
+    <span class="keyword">for</span> k=4:6
+        k1(k-3) = k;
+        m1(k-3) = 2^k-1;
+        m = 2^k-1;
+        h1(k-3) = (b-a)/(m+1);
+        h = (b-a)/(m+1);
+        w = 2/(1+sin(pi*h)); <span class="comment">%optimal relaxation parameter</span>
+
+        tic
+        [u,x,y] = fd2poisson(f,g,a,b,m);
+        gedirect = toc;
+        t(k-3) = gedirect;
+
+        tic
+        [usor,x,y] = fd2poissonsor(f,g,a,b,m,w);
+        gedirect = toc;
+        t_sor(k-3) = gedirect;
+
+        tic
+        [usp,x,y] = fd2poissonsp(f,g,a,b,m);
+        gedirect = toc;
+        t_sp(k-3) = gedirect;
+
+        tic
+        [udst,x,y] = fd2poissondst(f,g,a,b,m);
+        gedirect = toc;
+        t_dst(k-3) = gedirect;
+
+        tic
+        [umg,x,y] = fd2poissonmg(f,g,a,b,m);
+        gedirect = toc;
+        t_mg(k-3) = gedirect;
+    <span class="keyword">end</span>
+
+    t1   = [t1,t];
+    tsor = [tsor,t_sor];
+    tsp  = [tsp, t_sp];
+    tdst = [tdst, t_dst];
+    tmg  = [tmg,t_mg];
+<span class="keyword">end</span>
+
+<span class="comment">%k=4</span>
+c4=[t1(1);t1(4);t1(7)]';
+d4=[tsor(1);tsor(4);tsor(7)]';
+e4=[tsp(1);tsp(4);tsp(7)]';
+fd4=[tdst(1);tdst(4);tdst(7)]';
+h4=[tmg(1);tmg(4);tmg(7)]';
+
+<span class="comment">%k=5</span>
+c5=[t1(2);t1(5);t1(8)]';
+d5=[tsor(2);tsor(5);tsor(8)]';
+e5=[tsp(2);tsp(5);tsp(8)]';
+fd5=[tdst(2);tdst(5);tdst(8)]';
+h5=[tmg(2);tmg(5);tmg(8)]';
+
+<span class="comment">%k=6</span>
+c6=[t1(3);t1(6);t1(9)]';
+d6=[tsor(3);tsor(6);tsor(9)]';
+e6=[tsp(3);tsp(6);tsp(9)]';
+fd6=[tdst(3);tdst(6);tdst(9)]';
+h6=[tmg(3);tmg(6);tmg(9)]';
+
+k4 = [k1(1);k1(1);k1(1)];
+m4 = [m1(1);m1(1);m1(1)];
+h4 = [h1(1);h1(1);h1(1)];
+<span class="comment">%Table showing timing results of each method and for each value of m.</span>
+Table4 = table(k4,m4,h4,c4(:),d4(:),e4(:),fd4(:),h4(:), <span class="string">'VariableNames'</span>,{<span class="string">'k'</span>,<span class="string">'m'</span>,<span class="string">'h'</span>,<span class="string">'t_stan'</span>,<span class="string">'time_sor'</span>,<span class="string">'time_sp'</span>,<span class="string">'time_dst'</span>,<span class="string">'time_mg'</span>});
+
+k5 = [k1(2);k1(2);k1(2)];
+m5 = [m1(2);m1(2);m1(2)];
+h5 = [h1(2);h1(2);h1(2)];
+<span class="comment">%Table showing timing results of each method and for each value of m.</span>
+Table5 = table(k5,m5,h5,c5(:),d5(:),e5(:),fd5(:),h5(:), <span class="string">'VariableNames'</span>,{<span class="string">'k'</span>,<span class="string">'m'</span>,<span class="string">'h'</span>,<span class="string">'t_stan'</span>,<span class="string">'time_sor'</span>,<span class="string">'time_sp'</span>,<span class="string">'time_dst'</span>,<span class="string">'time_mg'</span>});
+
+k6 = [k1(3);k1(3);k1(3)];
+m6 = [m1(3);m1(3);m1(3)];
+h6 = [h1(3);h1(3);h1(3)];
+<span class="comment">%Table showing timing results of each method and for each value of m.</span>
+Table6 = table(k6,m6,h6,c6(:),d6(:),e6(:),fd6(:),h6(:), <span class="string">'VariableNames'</span>,{<span class="string">'k'</span>,<span class="string">'m'</span>,<span class="string">'h'</span>,<span class="string">'t_stan'</span>,<span class="string">'time_sor'</span>,<span class="string">'time_sp'</span>,<span class="string">'time_dst'</span>,<span class="string">'time_mg'</span>});
+
+Table = [Table4; Table5; Table6]
+
+<span class="comment">%mean</span>
+Tablem4 = table(k1(1),m1(1),h1(1),mean(c4),mean(d4),mean(e4),mean(fd4),mean(h4), <span class="string">'VariableNames'</span>,{<span class="string">'k'</span>,<span class="string">'m'</span>,<span class="string">'h'</span>,<span class="string">'t_stan'</span>,<span class="string">'time_sor'</span>,<span class="string">'time_sp'</span>,<span class="string">'time_dst'</span>,<span class="string">'time_mg'</span>});
+Tablem5 = table(k1(2),m1(2),h1(2),mean(c5),mean(d5),mean(e5),mean(fd5),mean(h5), <span class="string">'VariableNames'</span>,{<span class="string">'k'</span>,<span class="string">'m'</span>,<span class="string">'h'</span>,<span class="string">'t_stan'</span>,<span class="string">'time_sor'</span>,<span class="string">'time_sp'</span>,<span class="string">'time_dst'</span>,<span class="string">'time_mg'</span>});
+Tablem6 = table(k1(3),m1(3),h1(3),mean(c6),mean(d6),mean(e6),mean(fd6),mean(h6), <span class="string">'VariableNames'</span>,{<span class="string">'k'</span>,<span class="string">'m'</span>,<span class="string">'h'</span>,<span class="string">'t_stan'</span>,<span class="string">'time_sor'</span>,<span class="string">'time_sp'</span>,<span class="string">'time_dst'</span>,<span class="string">'time_mg'</span>});
+
+Table_mean = [Tablem4; Tablem5; Tablem6]
+
+fprintf(<span class="string">' Make: Ilife Zed AIR plus \n Processor type: Intel Celeron CPU N3350\n Speed: @ 1.10 GHz x2 \n Memory: 6GB DDR III RAM\n'</span>);
+
+fprintf(<span class="string">' (d). According to the computed mean wall clock time from Table_mean, fd2poissondst \n appears to be the best since it has the lowest computation time  amongest all other method as m increases.\n'</span>);
+
+fprintf(<span class="string">' Note: I used only k values from 4 to 5, because when i tried to run for k = 7 and above \n the MATLAB on my computer terminated, so i wouldnot perform any further simulations beyond k=6.\n'</span>);
+</pre><pre class="codeoutput">
+Table =
+
+  9&times;8 table
+
+    k    m        h         t_stan     time_sor    time_sp     time_dst    time_mg 
+    _    __    ________    ________    ________    ________    ________    ________
+
+    4    15      0.0625     0.32918    0.019242       0.185     0.17037      0.0625
+    4    15      0.0625    0.009003    0.003236    0.025851    0.002601      0.0625
+    4    15      0.0625    0.011332    0.002087    0.002174    0.000754      0.0625
+    5    31     0.03125    0.085766    0.025161    0.023151     0.01136     0.03125
+    5    31     0.03125    0.093103    0.008237    0.008022    0.020678     0.03125
+    5    31     0.03125       0.104    0.006533    0.007171    0.001901     0.03125
+    6    63    0.015625      2.9396    0.076385     0.03003    0.013109    0.015625
+    6    63    0.015625      2.7507    0.037827    0.027925    0.006052    0.015625
+    6    63    0.015625      2.8239    0.039376    0.027933    0.005864    0.015625
+
+
+Table_mean =
+
+  3&times;8 table
+
+    k    m        h         t_stan     time_sor     time_sp     time_dst     time_mg 
+    _    __    ________    ________    _________    ________    _________    ________
+
+    4    15      0.0625      0.1165    0.0081883    0.071008     0.057909      0.0625
+    5    31     0.03125    0.094288      0.01331    0.012781     0.011313     0.03125
+    6    63    0.015625      2.8381     0.051196    0.028629    0.0083417    0.015625
+
+ Make: Ilife Zed AIR plus 
+ Processor type: Intel Celeron CPU N3350
+ Speed: @ 1.10 GHz x2 
+ Memory: 6GB DDR III RAM
+ (d). According to the computed mean wall clock time from Table_mean, fd2poissondst 
+ appears to be the best since it has the lowest computation time  amongest all other method as m increases.
+ Note: I used only k values from 4 to 5, because when i tried to run for k = 7 and above 
+ the MATLAB on my computer terminated, so i wouldnot perform any further simulations beyond k=6.
+</pre><h2 id="2">Plot solution</h2><pre class="codeinput">figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,10,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+surf(x,y,u), xlabel(<span class="string">'x'</span>), ylabel(<span class="string">'y'</span>), zlabel(<span class="string">'u(x,y)'</span>),
+title(strcat(<span class="string">'Numerical Solution to Poisson Equation, h='</span>,num2str(h)));
+
+ <span class="comment">%Plot error</span>
+figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,10,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+surf(x,y,u-uexact(x,y)),xlabel(<span class="string">'x'</span>),ylabel(<span class="string">'y'</span>), zlabel(<span class="string">'Error'</span>),
+title(strcat(<span class="string">'Error, h='</span>,num2str(h)));
+</pre><img vspace="5" hspace="5" src="testFdPoisson_01.png" alt=""> <img vspace="5" hspace="5" src="testFdPoisson_02.png" alt=""> <h2 id="3">Plot solution</h2><pre class="codeinput">figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,10,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+surf(x,y,usor), xlabel(<span class="string">'x'</span>), ylabel(<span class="string">'y'</span>), zlabel(<span class="string">'u(x,y)'</span>),
+title(strcat(<span class="string">'Numerical Solution,usor, to Poisson Equation, h='</span>,num2str(h)));
+
+<span class="comment">% Plot error</span>
+figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,10,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+surf(x,y,usor-uexact(x,y)),xlabel(<span class="string">'x'</span>),ylabel(<span class="string">'y'</span>), zlabel(<span class="string">'Error'</span>),
+title(strcat(<span class="string">'Errorsor, h='</span>,num2str(h)));
+</pre><img vspace="5" hspace="5" src="testFdPoisson_03.png" alt=""> <img vspace="5" hspace="5" src="testFdPoisson_04.png" alt=""> <h2 id="4">Plot solution</h2><pre class="codeinput">figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,10,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+surf(x,y,usp), xlabel(<span class="string">'x'</span>), ylabel(<span class="string">'y'</span>), zlabel(<span class="string">'u(x,y)'</span>),
+title(strcat(<span class="string">'Numerical Solution,usp, to Poisson Equation, h='</span>,num2str(h)));
+
+<span class="comment">% Plot error</span>
+figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,10,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+surf(x,y,usp-uexact(x,y)),xlabel(<span class="string">'x'</span>),ylabel(<span class="string">'y'</span>), zlabel(<span class="string">'Error'</span>),
+title(strcat(<span class="string">'Errorsp, h='</span>,num2str(h)));
+</pre><img vspace="5" hspace="5" src="testFdPoisson_05.png" alt=""> <img vspace="5" hspace="5" src="testFdPoisson_06.png" alt=""> <h2 id="5">Plot solution</h2><pre class="codeinput">figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,10,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+surf(x,y,udst), xlabel(<span class="string">'x'</span>), ylabel(<span class="string">'y'</span>), zlabel(<span class="string">'u(x,y)'</span>),
+title(strcat(<span class="string">'Numerical Solution,udst, to Poisson Equation, h='</span>,num2str(h)));
+
+<span class="comment">% Plot error</span>
+figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,10,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+surf(x,y,udst-uexact(x,y)),xlabel(<span class="string">'x'</span>),ylabel(<span class="string">'y'</span>), zlabel(<span class="string">'Error'</span>),
+title(strcat(<span class="string">'Errordst, h='</span>,num2str(h)));
+</pre><img vspace="5" hspace="5" src="testFdPoisson_07.png" alt=""> <img vspace="5" hspace="5" src="testFdPoisson_08.png" alt=""> <h2 id="6">Plot solution</h2><pre class="codeinput">figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,10,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+surf(x,y,umg), xlabel(<span class="string">'x'</span>), ylabel(<span class="string">'y'</span>), zlabel(<span class="string">'u(x,y)'</span>),
+title(strcat(<span class="string">'Numerical Solution,umg, to Poisson Equation, h='</span>,num2str(h)));
+
+<span class="comment">% Plot error</span>
+figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,10,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+surf(x,y,umg-uexact(x,y)),xlabel(<span class="string">'x'</span>),ylabel(<span class="string">'y'</span>), zlabel(<span class="string">'Error'</span>),
+title(strcat(<span class="string">'Errormg, h='</span>,num2str(h)));
+</pre><img vspace="5" hspace="5" src="testFdPoisson_09.png" alt=""> <img vspace="5" hspace="5" src="testFdPoisson_10.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Script for testing fd2poisson over the square [a,b]x[a,b]
+a = 0; b = 1;
+
+% Laplacian(u) = f
+f = @(x,y) 10*pi^2*(1+cos(4*pi*(x+2*y))-2*sin(2*pi*(x+2*y))).*exp(sin(2*pi*(x+2*y)));  
+% u = g on Boundary
+g = @(x,y) exp(sin(2*pi*(x+2*y)));            
+
+% Exact solution is g.
+uexact = @(x,y) g(x,y);                     
+
+% Compute and time the solution
+k1    = zeros(1,3);
+h1    = zeros(1,3);
+m1    = zeros(1,3);
+t     = zeros(1,3);
+t_sor = zeros(1,3);
+t_sp  = zeros(1,3);
+t_dst = zeros(1,3);
+t_mg  = zeros(1,3);
+
+t1   = [];
+tsor = [];
+tsp  = [];
+tdst = [];
+tmg  = [];
+for ii = 1:3
+    for k=4:6
+        k1(k-3) = k;
+        m1(k-3) = 2^k-1;
+        m = 2^k-1; 
+        h1(k-3) = (b-a)/(m+1);
+        h = (b-a)/(m+1);
+        w = 2/(1+sin(pi*h)); %optimal relaxation parameter
+
+        tic
+        [u,x,y] = fd2poisson(f,g,a,b,m);
+        gedirect = toc;
+        t(k-3) = gedirect;
+
+        tic
+        [usor,x,y] = fd2poissonsor(f,g,a,b,m,w);
+        gedirect = toc;
+        t_sor(k-3) = gedirect;
+
+        tic
+        [usp,x,y] = fd2poissonsp(f,g,a,b,m);
+        gedirect = toc;
+        t_sp(k-3) = gedirect;
+
+        tic
+        [udst,x,y] = fd2poissondst(f,g,a,b,m);
+        gedirect = toc;
+        t_dst(k-3) = gedirect;
+
+        tic
+        [umg,x,y] = fd2poissonmg(f,g,a,b,m);
+        gedirect = toc;
+        t_mg(k-3) = gedirect;
+    end
+    
+    t1   = [t1,t];
+    tsor = [tsor,t_sor];
+    tsp  = [tsp, t_sp];
+    tdst = [tdst, t_dst];
+    tmg  = [tmg,t_mg];
+end
+
+%k=4
+c4=[t1(1);t1(4);t1(7)]';
+d4=[tsor(1);tsor(4);tsor(7)]';
+e4=[tsp(1);tsp(4);tsp(7)]';
+fd4=[tdst(1);tdst(4);tdst(7)]';
+h4=[tmg(1);tmg(4);tmg(7)]';
+
+%k=5
+c5=[t1(2);t1(5);t1(8)]';
+d5=[tsor(2);tsor(5);tsor(8)]';
+e5=[tsp(2);tsp(5);tsp(8)]';
+fd5=[tdst(2);tdst(5);tdst(8)]';
+h5=[tmg(2);tmg(5);tmg(8)]';
+
+%k=6
+c6=[t1(3);t1(6);t1(9)]';
+d6=[tsor(3);tsor(6);tsor(9)]';
+e6=[tsp(3);tsp(6);tsp(9)]';
+fd6=[tdst(3);tdst(6);tdst(9)]';
+h6=[tmg(3);tmg(6);tmg(9)]';
+
+k4 = [k1(1);k1(1);k1(1)];
+m4 = [m1(1);m1(1);m1(1)];
+h4 = [h1(1);h1(1);h1(1)];
+%Table showing timing results of each method and for each value of m.
+Table4 = table(k4,m4,h4,c4(:),d4(:),e4(:),fd4(:),h4(:), 'VariableNames',{'k','m','h','t_stan','time_sor','time_sp','time_dst','time_mg'});
+
+k5 = [k1(2);k1(2);k1(2)];
+m5 = [m1(2);m1(2);m1(2)];
+h5 = [h1(2);h1(2);h1(2)];
+%Table showing timing results of each method and for each value of m.
+Table5 = table(k5,m5,h5,c5(:),d5(:),e5(:),fd5(:),h5(:), 'VariableNames',{'k','m','h','t_stan','time_sor','time_sp','time_dst','time_mg'});
+
+k6 = [k1(3);k1(3);k1(3)];
+m6 = [m1(3);m1(3);m1(3)];
+h6 = [h1(3);h1(3);h1(3)];
+%Table showing timing results of each method and for each value of m.
+Table6 = table(k6,m6,h6,c6(:),d6(:),e6(:),fd6(:),h6(:), 'VariableNames',{'k','m','h','t_stan','time_sor','time_sp','time_dst','time_mg'});
+
+Table = [Table4; Table5; Table6] 
+
+%mean
+Tablem4 = table(k1(1),m1(1),h1(1),mean(c4),mean(d4),mean(e4),mean(fd4),mean(h4), 'VariableNames',{'k','m','h','t_stan','time_sor','time_sp','time_dst','time_mg'});
+Tablem5 = table(k1(2),m1(2),h1(2),mean(c5),mean(d5),mean(e5),mean(fd5),mean(h5), 'VariableNames',{'k','m','h','t_stan','time_sor','time_sp','time_dst','time_mg'});
+Tablem6 = table(k1(3),m1(3),h1(3),mean(c6),mean(d6),mean(e6),mean(fd6),mean(h6), 'VariableNames',{'k','m','h','t_stan','time_sor','time_sp','time_dst','time_mg'});
+
+Table_mean = [Tablem4; Tablem5; Tablem6] 
+
+fprintf(' Make: Ilife Zed AIR plus \n Processor type: Intel Celeron CPU N3350\n Speed: @ 1.10 GHz x2 \n Memory: 6GB DDR III RAM\n');
+
+fprintf(' (d). According to the computed mean wall clock time from Table_mean, fd2poissondst \n appears to be the best since it has the lowest computation time  amongest all other method as m increases.\n');
+
+fprintf(' Note: I used only k values from 4 to 5, because when i tried to run for k = 7 and above \n the MATLAB on my computer terminated, so i wouldnot perform any further simulations beyond k=6.\n');
+%% Plot solution
+figure, set(gcf,'DefaultAxesFontSize',10,'PaperPosition', [0 0 3.5 3.5]), 
+surf(x,y,u), xlabel('x'), ylabel('y'), zlabel('u(x,y)'),
+title(strcat('Numerical Solution to Poisson Equation, h=',num2str(h)));
+
+ %Plot error
+figure, set(gcf,'DefaultAxesFontSize',10,'PaperPosition', [0 0 3.5 3.5]), 
+surf(x,y,u-uexact(x,y)),xlabel('x'),ylabel('y'), zlabel('Error'), 
+title(strcat('Error, h=',num2str(h)));
+
+%% Plot solution
+figure, set(gcf,'DefaultAxesFontSize',10,'PaperPosition', [0 0 3.5 3.5]), 
+surf(x,y,usor), xlabel('x'), ylabel('y'), zlabel('u(x,y)'),
+title(strcat('Numerical Solution,usor, to Poisson Equation, h=',num2str(h)));
+
+% Plot error
+figure, set(gcf,'DefaultAxesFontSize',10,'PaperPosition', [0 0 3.5 3.5]), 
+surf(x,y,usor-uexact(x,y)),xlabel('x'),ylabel('y'), zlabel('Error'), 
+title(strcat('Errorsor, h=',num2str(h)));
+
+%% Plot solution
+figure, set(gcf,'DefaultAxesFontSize',10,'PaperPosition', [0 0 3.5 3.5]), 
+surf(x,y,usp), xlabel('x'), ylabel('y'), zlabel('u(x,y)'),
+title(strcat('Numerical Solution,usp, to Poisson Equation, h=',num2str(h)));
+
+% Plot error
+figure, set(gcf,'DefaultAxesFontSize',10,'PaperPosition', [0 0 3.5 3.5]), 
+surf(x,y,usp-uexact(x,y)),xlabel('x'),ylabel('y'), zlabel('Error'), 
+title(strcat('Errorsp, h=',num2str(h)));
+
+%% Plot solution
+figure, set(gcf,'DefaultAxesFontSize',10,'PaperPosition', [0 0 3.5 3.5]), 
+surf(x,y,udst), xlabel('x'), ylabel('y'), zlabel('u(x,y)'),
+title(strcat('Numerical Solution,udst, to Poisson Equation, h=',num2str(h)));
+
+% Plot error
+figure, set(gcf,'DefaultAxesFontSize',10,'PaperPosition', [0 0 3.5 3.5]), 
+surf(x,y,udst-uexact(x,y)),xlabel('x'),ylabel('y'), zlabel('Error'), 
+title(strcat('Errordst, h=',num2str(h)));
+
+%% Plot solution
+figure, set(gcf,'DefaultAxesFontSize',10,'PaperPosition', [0 0 3.5 3.5]), 
+surf(x,y,umg), xlabel('x'), ylabel('y'), zlabel('u(x,y)'),
+title(strcat('Numerical Solution,umg, to Poisson Equation, h=',num2str(h)));
+
+% Plot error
+figure, set(gcf,'DefaultAxesFontSize',10,'PaperPosition', [0 0 3.5 3.5]), 
+surf(x,y,umg-uexact(x,y)),xlabel('x'),ylabel('y'), zlabel('Error'), 
+title(strcat('Errormg, h=',num2str(h)));
+
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,205 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Template for AIMS Rwanda Assignments         %%%              %%%
+%%% Author:   AIMS Rwanda tutors                             %%%   ###        %%%
+%%% Email: tutors2018-19@aims.ac.rw                               %%%   ###        %%%
+%%% Copyright: This template was designed to be used for    %%% #######      %%%
+%%% the assignments at AIMS Rwanda during the academic year %%%   ###        %%%
+%%% 2018-2019.                                              %%%   #########  %%%
+%%% You are free to alter any part of this document for     %%%   ###   ###  %%%
+%%% yourself and for distribution.                          %%%   ###   ###  %%%
+%%%                                                         %%%              %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%% Ensure that you do not write the questions before each of the solutions because it is not necessary. %%%%%% 
+
+\documentclass[12pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% packages %%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[all]{xy}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{psfrag}
+
+%%%%%%%%%%%%%%%%%%%%% students data %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\student}{Brian KYANJO }
+\newcommand{\course}{Numerical Methods in Climate Science}
+\newcommand{\assignment}{1}
+
+%%%%%%%%%%%%%%%%%%% using theorem style %%%%%%%%%%%%%%%%%%%%
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{definition}{Definition}[section] 
+\newtheorem{theorem}{Theorem}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{quest}{Question}[section]
+
+%%%%%%%%%%%%%%  Shortcut for usual set of numbers  %%%%%%%%%%%
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%% title page %%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}
+\begin{center}
+\textbf{AFRICAN INSTITUTE FOR MATHEMATICAL SCIENCES \\[0.5cm]
+(AIMS RWANDA, KIGALI)}
+\vspace{1.0cm}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%% assignment information %%%%%%%%%%%%%%%%
+\noindent
+\rule{17cm}{0.2cm}\\[0.3cm]
+Name: \student \hfill Assignment Number: \assignment\\[0.1cm]
+Course: \course \hfill Date: \today\\
+\rule{17cm}{0.05cm}
+\vspace{1.0cm}
+
+\section*{Exercise 1} 
+1. Put the systems in this form
+$$ Y^{\prime}(t)=F(t,Y)$$
+we have $$\begin{pmatrix}
+	x^{\prime} \\ 
+	y^{\prime} \\ 
+	z^{\prime}
+\end{pmatrix} =\begin{pmatrix}
+F_{x} & F_{y} & F_{z} \\ 
+H_{x} & H_{y} & H_{z} \\ 
+G_{x} & G_{y} & G_{z} \\ 
+\end{pmatrix} \begin{pmatrix}
+x \\ 
+y \\ 
+z
+\end{pmatrix}$$
+which becomes 
+\begin{equation}
+\begin{pmatrix}
+x^{\prime} \\ 
+y^{\prime} \\ 
+z^{\prime}
+\end{pmatrix} =\begin{pmatrix}
+-\sigma & \sigma & 0 \\ 
+(\rho - z) & -1 & -x \\ 
+y & x & -\beta \\ 
+\end{pmatrix} \begin{pmatrix}
+x \\ 
+y \\ 
+z
+\end{pmatrix}
+\label{0}
+\end{equation}
+comparing equation \ref{0} with  $ Y^{\prime}(t)=F(t,Y)$ we obtain
+\begin{equation}
+F(t,Y)=\begin{pmatrix}
+-\sigma & \sigma & 0 \\ 
+(\rho - z) & -1 & -x \\ 
+y & x & -\beta \\ 
+\end{pmatrix} \begin{pmatrix}
+x \\ 
+y \\ 
+z
+\end{pmatrix}
+\label{1}
+\end{equation}
+
+Using $Y^{\prime}(t)=AY$ i identify $Y$ to be 
+$$Y=\begin{pmatrix}
+x \\ 
+y \\ 
+z
+\end{pmatrix}$$
+
+\noindent 2. Write down the Mid-point scheme\\
+The general form of the midpoint scheme is as follows \\
+$$
+\left \{
+\begin{array}{rcl}
+x(t_0)&=&x_0\\
+y(t_0)&=&y_0\\
+z(t_0)&=&z_0 \\
+\Delta t_{n}&=&\Delta t\\
+t_{n+1/2} &=& t_n+\frac{1}{2}\Delta t \\
+t_{n} &=& t_0+n\Delta t \\
+y_{n+\frac{1}{2}}&=&y_{n} +\frac{\Delta t }{2}f(t_{n},y_n)\\
+y_{n+1}&=&y_{n} +\Delta t f(t_{n+\frac{1}{2}},y_{n+\frac{1}{2}})
+\end{array}
+\right.
+$$
+the scheme for \ref{0} will be as follows 
+ 
+$$
+\left \{
+\begin{array}{rcl}
+x(t_0)&=&x_0\\
+y(t_0)&=&y_0\\
+z(t_0)&=&z_0 \\
+\Delta t_{n}&=&\Delta t\\
+t_{n+1/2} &=& t_n+\frac{1}{2}\Delta t \\
+t_{n} &=& t_0+n\Delta t \\
+\begin{pmatrix}
+x_{n+\frac{1}{2}} \\ 
+y_{n+\frac{1}{2}} \\ 
+z_{n+\frac{1}{2}}
+\end{pmatrix} &=&\begin{pmatrix}
+x_n \\ 
+y_n \\ 
+z_n
+\end{pmatrix} +\frac{\Delta t }{2}\begin{pmatrix}
+-\sigma & \sigma & 0 \\ 
+(\rho - z_n) & -1 & -x_n \\ 
+y_n & x_n & -\beta \\ 
+\end{pmatrix}\begin{pmatrix}
+x_n \\ 
+y_n \\ 
+z_n
+\end{pmatrix}  \\
+\begin{pmatrix}
+x_{n+1} \\ 
+y_{n+1}\\ 
+z_{n+1}
+\end{pmatrix} &=&\begin{pmatrix}
+x_n \\ 
+y_n \\ 
+z_n
+\end{pmatrix} +\Delta t \begin{pmatrix}
+-\sigma & \sigma & 0 \\ 
+(\rho - z_{n+\frac{1}{2}}) & -1 & -x_{n+\frac{1}{2}} \\ 
+y_{n+\frac{1}{2}} & x_{n+\frac{1}{2}} & -\beta \\ 
+\end{pmatrix}\begin{pmatrix}
+x_{n+1} \\ 
+y_{n+1}\\ 
+z_{n+1}
+\end{pmatrix}
+\end{array}
+\right.
+$$
+which simplifies to\\\\
+
+ 
+\noindent 3. Compute the approximate solution for $n=0$ and $n=1$
+
+
+\end{document}

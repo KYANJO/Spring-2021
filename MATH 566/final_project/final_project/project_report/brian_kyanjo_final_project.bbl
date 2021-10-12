@@ -1,0 +1,64 @@
+\begin{thebibliography}{10}
+
+\bibitem{bakhvalov1966convergence}
+Nikolai~Sergeevich Bakhvalov.
+\newblock On the convergence of a relaxation method with natural constraints on
+  the elliptic operator.
+\newblock {\em USSR Computational Mathematics and Mathematical Physics},
+  6(5):101--135, 1966.
+
+\bibitem{brandt1977multi}
+Achi Brandt.
+\newblock Multi-level adaptive solutions to boundary-value problems.
+\newblock {\em Mathematics of computation}, 31(138):333--390, 1977.
+
+\bibitem{brayton1970some}
+Robert~K Brayton, Fred~G Gustavson, and Ralph~A Willoughby.
+\newblock Some results on sparse matrices.
+\newblock {\em Mathematics of Computation}, 24(112):937--954, 1970.
+
+\bibitem{briggs2000multigrid}
+William~L Briggs, Van~Emden Henson, and Steve~F McCormick.
+\newblock {\em A multigrid tutorial}.
+\newblock SIAM, 2000.
+
+\bibitem{fedorenko1964speed}
+Radii~Petrovich Fedorenko.
+\newblock The speed of convergence of one iterative process.
+\newblock {\em USSR Computational Mathematics and Mathematical Physics},
+  4(3):227--235, 1964.
+
+\bibitem{fulton1986multigrid}
+Scott~R Fulton, Paul~E Ciesielski, and Wayne~H Schubert.
+\newblock Multigrid methods for elliptic problems: A review.
+\newblock {\em Monthly Weather Review}, 114(5):943--959, 1986.
+
+\bibitem{gupta1990fast}
+A~Gupta and K~Raghava Rao.
+\newblock A fast recursive algorithm for the discrete sine transform.
+\newblock {\em IEEE Transactions on Acoustics, Speech, and Signal Processing},
+  38(3):553--557, 1990.
+
+\bibitem{kuo1989two}
+C-C~Jay Kuo and Bernard~C Levy.
+\newblock Two-color fourier analysis of the multigrid method with red-black
+  gauss-seidel smoothing.
+\newblock {\em Applied Mathematics and Computation}, 29(1):69--87, 1989.
+
+\bibitem{leveque2007finite}
+Randall~J LeVeque.
+\newblock {\em Finite difference methods for ordinary and partial differential
+  equations: steady-state and time-dependent problems}.
+\newblock SIAM, 2007.
+
+\bibitem{trottenberg2000multigrid}
+Ulrich Trottenberg, Cornelius~W Oosterlee, and Anton Schuller.
+\newblock {\em Multigrid}.
+\newblock Elsevier, 2000.
+
+\bibitem{wienands2004practical}
+Roman Wienands and Wolfgang Joppich.
+\newblock {\em Practical Fourier analysis for multigrid methods}.
+\newblock CRC press, 2004.
+
+\end{thebibliography}

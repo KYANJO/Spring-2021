@@ -1,0 +1,1 @@
+/cm/local/apps/slurm/var/spool/job320720/slurm_script: line 19: 19374 Segmentation fault      (core dumped) ./task3_1 1000000000000 >> task3_1.csv

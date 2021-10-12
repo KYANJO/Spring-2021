@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{10.5555/2430671}
+Shane Cook.
+\newblock {\em CUDA Programming: A Developer’s Guide to Parallel Computing
+  with GPUs}.
+\newblock Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 1st edition,
+  2012.
+
+\bibitem{cuda}
+NVIDIA, Péter Vingelmann, and Frank~H.P. Fitzek.
+\newblock Cuda, release: 10.2.89, 2020.
+
+\end{thebibliography}

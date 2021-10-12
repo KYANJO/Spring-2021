@@ -1,0 +1,107 @@
+\documentclass[12pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% packages %%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[all]{xy}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=1.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{psfrag}
+
+
+%%%%%%%%%%%%%%%%%%%%% students data %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\student}{Brian KYANJO }
+\newcommand{\course}{Numerical Methods for Linear Algebra}
+\newcommand{\assignment}{ Prof. Grady Wright}
+
+%%%%%%%%%%%%%%%%%%% using theorem style %%%%%%%%%%%%%%%%%%%%
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{definition}{Definition}[section] 
+\newtheorem{theorem}{Theorem}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{quest}{Question}[section]
+
+%%%%%%%%%%%%%%  Shortcut for usual set of numbers  %%%%%%%%%%%
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%% title page %%%%%%%%%%%%%%%%%%%%%%%%%%
+	\thispagestyle{empty}
+	\begin{center}
+		\textbf{MULTIGRID FOR SOLVING ELLIPTIC DIFFERENTIAL EQUATIONS \\[0.5cm]
+		Project Proposal}
+		\vspace{.2cm}
+	\end{center}
+	
+	%%%%%%%%%%%%%%%%%%%%% assignment information %%%%%%%%%%%%%%%%
+	\noindent
+	\rule{17cm}{0.2cm}\\[0.3cm]
+	Name: \student \hfill Supervisor: \assignment\\[0.1cm]
+	Course: \course \hfill Date: \today\\
+	\rule{17cm}{0.05cm}
+	\vspace{.2cm}
+	
+	\section*{Problem description}
+	Many problems that arise from physical applications give us a natural feel to the multigrid methods. These methods have been applied directly to non linear problems 	\cite{briggs2000multigrid}, and many researchers have used them to perform different studies on a variety of problems. However here we are going to concentrate on;
+	\begin{itemize}
+		\item Examing why the method works	\cite{trottenberg2000multigrid}.
+		\item  Using the method  to solve elliptic partial differential equations
+		\item Applying Fourier Analysis to the two-grid operator.
+		\item Experiment with different smoothers e.g. red-black and Gauss-Seidel to see how errors are smoothed.
+		\item Comparing the method with Discrete Sine Transform  (DST)  and the Sparse Gausian Elimination (SGE) solver in solving Elliptic Differential Equations , i.e, look at the computataional time taken to solve the problem in question. 
+		\item Validate the method results against  the DST solver results.
+	\end{itemize}
+
+	\section*{Method used}
+	The Methods that will be used in this study are Multigrid solver with either red black Gaus Seidel smother or damped Jacobi smother. The main idea behind multigrid is to switch between coarser and finer grid to estimate the remaining smoothed error after applying the smother at the first step. This is a good approach becasue its cheap iterating on a coarser grid than further continung on the original grid. Even though, this might not be very useful, but the convergence rate of most components of the error are greatly imporved on shifting them on the coarser grid.\\
+	
+	\noindent To confirm whether the method is working, the results are validated against DST solver output  obtained after  solving the same problem.  The running time for the MG will be compared that of DST and SPE solvers, this will help us determine how computationally cheap the code is.
+	
+	
+		\subsection*{Case Study}
+	The above solvers are used to solve the following $2D$ Poison  problem \eqref{01}, and the solutions will be displayed in the Results section.  The $2D$ elliptic problem is solved over the domain [a,b]x[a,b] with $a=0$ and $b=1$, grid spacing $dx=dy=h=\frac{b-a}{m+1}$, with $m=2^{k-1}$ where k =7 for this study. As a matter of fact, we used k = 7, since the method we are comparing with cant exceed that due to insufficient resources. But  Multigrid shoots more than that, and the larger k is, the greater the accuracy.
+	
+	\begin{equation}
+		\nabla ^{2} u = f(x,y)
+		\label{01}
+	\end{equation}
+	where 
+	$$f(x,y) = 10\pi^{2} (1+ \cos(4\pi(x+2y))) -2*\sin(2\pi(x+2y)) e^{sin(2\pi(x+2y))} $$
+	with Bounbary conditions.
+	$$u(x,y) = g(x,y) $$
+	where 
+	$$g(x,y) = e^{sin(2\pi(x+2y))} $$
+	
+	The exact solution used to validate results and compute the error is given by equation \eqref{02}.
+	
+	\begin{equation}
+		ue(x,y) = g(x,y)
+		\label{02}
+	\end{equation}
+	
+
+	\bibliographystyle{plain}
+	\bibliography{document}
+	
+\end{document}

@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <math.h>
+
+
+
+// -------------------------------------------------------------------------
+// fun - defines a function to be integrated by trapez
+double fun(double x){ 
+  return 4.0/(1+x*x);
+}
+
+// -------------------------------------------------------------------------
+// trapez - computes the integral of function fun between a and b using trapezoidal rule
+// with n intervals (n+1 points)
+// The function has to be defined outside of trapez, and is assumed to be called fun.
+double trapez(double a, double b, int n, double h){ 
+
+  double result, x;
+  int i;
+
+  result = 0.5*(fun(a)+fun(b));
+  for(i=1; i<n; i++){
+    x = a + i*h;
+    result += fun(x);
+  }
+  result = result*h;
+
+  return result;
+} //trapez
+
+
+// -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+//main program
+int main(int argc, char* argv[]){ 
+
+  double global_a=0, global_b=1.0; //define interval size
+  int global_N = 1280000000; //number of intervals to use for integration
+  double h; //integration interval size
+
+  double local_a, local_b, local_result, global_result;
+  int local_n; 
+
+  int i, numproc, irank;
+
+  double starttime, stoptime, comm_stop_time, comm_start_time;
+
+  MPI_Init(&argc, &argv); //initialize MPI
+  MPI_Comm_size(MPI_COMM_WORLD, &numproc); //how many processes are there?
+  MPI_Comm_rank(MPI_COMM_WORLD, &irank); //which number am I?
+
+  starttime = MPI_Wtime(); //start the timer
+
+  h = (global_b - global_a)/global_N; //all processes compute h
+
+  local_n = global_N/numproc; //How many intervals do I need to integrate?
+  local_a = global_a + irank*local_n*h; //What is my left integration boundary?
+  local_b = local_a + local_n*h; //What is my right integration boundary?
+   
+  //Compute local integral
+  local_result = trapez(local_a,local_b,local_n,h);
+
+  //printf("rank = %d, a = %f, b = %f, n = %d, h = %f, result = %f\n",irank,local_a,local_b,local_n,h,local_result);
+
+  stoptime = MPI_Wtime(); //stop the timer
+
+  comm_start_time = MPI_Wtime();//start communication timer
+
+  //Collect results
+  
+  if (irank != 0) { //if a worker, send result to manager rank0
+
+    MPI_Send(&local_result, 1, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
+    //    printf("rank %d have sent message\n",irank);
+
+  } else { //if manager rank (rank0), collect results from workers
+
+    global_result = local_result; //start with local contribution of rank0
+
+    for ( i = 1; i<numproc; i++){
+      MPI_Recv(&local_result, 1, MPI_DOUBLE, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE); //receive messages sent by workers
+      //printf("Rank %d received %d\n",irank, i);
+      global_result += local_result; //update the global result
+    }
+
+    }
+  //MPI_Reduce(&local_result,&global_result,1,MPI_DOUBLE,MPI_SUM,0,MPI_COMM_WORLD);
+  comm_stop_time = MPI_Wtime();
+
+
+  //Print results
+  if(irank==0){
+    printf("n= %d, nprocs = %d, time = %e, comm_time = %e, total time = %e, pi = %.15f\n",global_N,numproc,stoptime-starttime,comm_stop_time-comm_start_time,comm_stop_time-starttime,global_result);
+  }
+
+  
+
+  MPI_Finalize(); //finalize MPI
+  return 0;
+}

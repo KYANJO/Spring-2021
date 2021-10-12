@@ -1,0 +1,2 @@
+Error: mastery_gpu.cu:223, code: 77, reason: an illegal memory access was encountered
+N = 32	 Elapsed time = 0.000138

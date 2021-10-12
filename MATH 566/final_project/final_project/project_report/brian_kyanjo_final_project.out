@@ -1,0 +1,21 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Background}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{General Objectives}{section.1}% 3
+\BOOKMARK [1][-]{section.2}{Literature}{}% 4
+\BOOKMARK [1][-]{section.3}{Formulation}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Multigrid \(MG\)}{section.3}% 6
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Smothers}{subsection.3.1}% 7
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Damped Jacobi}{subsection.3.1}% 8
+\BOOKMARK [3][-]{subsubsection.3.1.3}{Red-Black Gauss Seidel Method}{subsection.3.1}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Fourier Analysis \(FA\) to the two-grid operator.}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.3}{Discrete Sine Transform \(DST\)}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.4}{Sparse Gaussian Elimination \(SGE\)}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.5}{Case Study}{section.3}% 13
+\BOOKMARK [1][-]{section.4}{Results}{}% 14
+\BOOKMARK [2][-]{subsection.4.1}{Comparison and Validation of Results}{section.4}% 15
+\BOOKMARK [1][-]{section.5}{Conclusion}{}% 16
+\BOOKMARK [1][-]{section.6}{Appendix}{}% 17
+\BOOKMARK [2][-]{subsection.6.1}{MG solver}{section.6}% 18
+\BOOKMARK [2][-]{subsection.6.2}{DST Solver}{section.6}% 19
+\BOOKMARK [2][-]{subsection.6.3}{SGE Solver}{section.6}% 20
+\BOOKMARK [2][-]{subsection.6.4}{Main}{section.6}% 21

@@ -1,0 +1,32 @@
+%*****************************************************************************************
+%*****************************************************************************************
+%% Create subtriangulation for plotting
+nNodePlot = nDOF*nElem;
+nElemPlot = nSub*nElem;
+xp = zeros(nNodePlot,1);
+yp = zeros(nNodePlot,1);
+trip = zeros(nElemPlot,3);
+countE = 0; % element counter
+countN = 0; % node counter
+for iElem=1:nElem
+    % create subtriangulation for the plotting of the high order DG
+    % polynomials
+    offset = (iElem-1)*nDOF;
+    for iSub=1:nSub
+        countE = countE + 1;
+        trip(countE,:) = offset + SubTri(iSub,:);
+    end
+    % create the subnodes
+    X = x(tri(iElem,:));
+    Y = y(tri(iElem,:));
+    for iSubNode=1:nDOF
+        countN = countN + 1;
+        xi  = xisub(iSubNode,1);
+        eta = xisub(iSubNode,2);
+        xx = X(1) + xi *(X(2)-X(1)) + eta*(X(3)-X(1));
+        yy = Y(1) + xi *(Y(2)-Y(1)) + eta*(Y(3)-Y(1));
+        xp(countN) = xx;
+        yp(countN) = yy;
+    end
+end
+disp('Subgrid triangulation created')

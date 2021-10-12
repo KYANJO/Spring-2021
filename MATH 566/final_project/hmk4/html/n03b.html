@@ -1,0 +1,229 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>n03b</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-31"><meta name="DC.source" content="n03b.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%Using the code from part(a) to solve the Poisson equation with f(x,y) =  -8*(pi^2)*(cos(2*pi*x)).*(cos(2*pi*y))</span>
+
+m=(2^6)-1;
+a=0;b=1;
+h=(b-a)/(m+1);
+
+<span class="comment">%fuction f(x,y)</span>
+pfun=@(x,y) -8*(pi^2)*(cos(2*pi*x)).*(cos(2*pi*y));
+
+<span class="comment">%Approximated</span>
+[u,x,y]=fd2poissondct(pfun,a,b,m);
+
+<span class="comment">%Numerical solution to the poisson equation</span>
+figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,8,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+mesh(x,y,u), colormap([0 0 0]),xlabel(<span class="string">'x'</span>),ylabel(<span class="string">'y'</span>),
+zlabel(<span class="string">'u_ approx'</span>), title(strcat(<span class="string">'u, h='</span>,num2str(h)));
+
+<span class="comment">%Exact function</span>
+uex=@(x,y) (cos(2*pi*x)).*(cos(2*pi*y));
+ue=uex(x,y);
+error = (u-ue);
+
+<span class="comment">%Plot error</span>
+figure, set(gcf,<span class="string">'DefaultAxesFontSize'</span>,8,<span class="string">'PaperPosition'</span>, [0 0 3.5 3.5]),
+mesh(x,y,error), colormap([0 0 0]),xlabel(<span class="string">'x'</span>),ylabel(<span class="string">'y'</span>),
+zlabel(<span class="string">'Error'</span>), title(strcat(<span class="string">'Error, h='</span>,num2str(h)));
+
+<span class="comment">%Table showing the convergence of the solution to the true solution.</span>
+k1 = zeros(7,1);
+h1=zeros(7,1);
+L2=zeros(7,1);
+m1=zeros(7,1);
+
+<span class="keyword">for</span> k = 4:10
+    k1(k-3) = k;
+    m1(k-3) = (2^k) - 1;
+    m = (2^k) - 1;
+    h1(k-3) = (b-a)/(m+1);
+    h = (b-a)/(m+1);
+
+    [x1,y1] = meshgrid(a:h:b);
+
+    [u,x1,y1] = fd2poissondct(pfun,a,b,m);
+    ue = uex(x1,y1);
+
+    error = u - uex(x1,y1);
+
+    L2(k-3) = R2Norm(error,ue);
+<span class="keyword">end</span>
+
+<span class="comment">%table</span>
+T = table(k1(:),m1(:),h1(:),L2(:), <span class="string">'VariableNames'</span>,{<span class="string">'k'</span>,<span class="string">'m'</span>,<span class="string">'h'</span>,<span class="string">'R2-norm'</span>})
+fprintf(<span class="string">'Its clear from the table that as m increases due to increasing k, \n h decreases, and the value of the relative 2-norm significantly decreases as m grows big. \n Hence the big the m, the faster the solution converges to the true solution.\n'</span>);
+
+<span class="comment">%polyfit</span>
+p=polyfit(log(h1),log(L2),1);
+p
+fprintf(<span class="string">'Since the order of convergence,p, is 2.0014, which is approximately 2, \n hence the method is second order accurate.\n'</span>)
+
+<span class="keyword">function</span> L2 = R2Norm(error, uexact)
+    R = error .^2;
+    u_ex = uexact.^2;
+    L2 = sqrt(sum(R,<span class="string">'all'</span>)/sum(u_ex,<span class="string">'all'</span>));
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+T =
+
+  7&times;4 table
+
+    k      m          h          R2-norm  
+    __    ____    __________    __________
+
+     4      15        0.0625      0.012951
+     5      31       0.03125      0.003219
+     6      63      0.015625    0.00080358
+     7     127     0.0078125    0.00020082
+     8     255     0.0039062    5.0201e-05
+     9     511     0.0019531     1.255e-05
+    10    1023    0.00097656    3.1375e-06
+
+Its clear from the table that as m increases due to increasing k, 
+ h decreases, and the value of the relative 2-norm significantly decreases as m grows big. 
+ Hence the big the m, the faster the solution converges to the true solution.
+
+p =
+
+    2.0014    1.1992
+
+Since the order of convergence,p, is 2.0014, which is approximately 2, 
+ hence the method is second order accurate.
+</pre><img vspace="5" hspace="5" src="n03b_01.png" alt=""> <img vspace="5" hspace="5" src="n03b_02.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Using the code from part(a) to solve the Poisson equation with f(x,y) =  -8*(pi^2)*(cos(2*pi*x)).*(cos(2*pi*y))
+
+m=(2^6)-1;
+a=0;b=1;
+h=(b-a)/(m+1);
+
+%fuction f(x,y)
+pfun=@(x,y) -8*(pi^2)*(cos(2*pi*x)).*(cos(2*pi*y));
+
+%Approximated
+[u,x,y]=fd2poissondct(pfun,a,b,m);
+
+%Numerical solution to the poisson equation
+figure, set(gcf,'DefaultAxesFontSize',8,'PaperPosition', [0 0 3.5 3.5]),  
+mesh(x,y,u), colormap([0 0 0]),xlabel('x'),ylabel('y'), 
+zlabel('u_ approx'), title(strcat('u, h=',num2str(h))); 
+
+%Exact function
+uex=@(x,y) (cos(2*pi*x)).*(cos(2*pi*y));
+ue=uex(x,y);
+error = (u-ue);
+
+%Plot error
+figure, set(gcf,'DefaultAxesFontSize',8,'PaperPosition', [0 0 3.5 3.5]),  
+mesh(x,y,error), colormap([0 0 0]),xlabel('x'),ylabel('y'), 
+zlabel('Error'), title(strcat('Error, h=',num2str(h))); 
+
+%Table showing the convergence of the solution to the true solution.
+k1 = zeros(7,1);
+h1=zeros(7,1);
+L2=zeros(7,1);
+m1=zeros(7,1);
+
+for k = 4:10
+    k1(k-3) = k;
+    m1(k-3) = (2^k) - 1;
+    m = (2^k) - 1;
+    h1(k-3) = (b-a)/(m+1);
+    h = (b-a)/(m+1);
+    
+    [x1,y1] = meshgrid(a:h:b);
+    
+    [u,x1,y1] = fd2poissondct(pfun,a,b,m);
+    ue = uex(x1,y1);
+    
+    error = u - uex(x1,y1);
+    
+    L2(k-3) = R2Norm(error,ue);
+end 
+
+%table
+T = table(k1(:),m1(:),h1(:),L2(:), 'VariableNames',{'k','m','h','R2-norm'})
+fprintf('Its clear from the table that as m increases due to increasing k, \n h decreases, and the value of the relative 2-norm significantly decreases as m grows big. \n Hence the big the m, the faster the solution converges to the true solution.\n'); 
+
+%polyfit
+p=polyfit(log(h1),log(L2),1);
+p
+fprintf('Since the order of convergence,p, is 2.0014, which is approximately 2, \n hence the method is second order accurate.\n')
+
+function L2 = R2Norm(error, uexact)
+    R = error .^2;
+    u_ex = uexact.^2;
+    L2 = sqrt(sum(R,'all')/sum(u_ex,'all'));
+end
+
+
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,1 @@
+[LU,p,q,gf] = lucp(A)

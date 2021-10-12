@@ -1,0 +1,38 @@
+% Program that implements the modified Gram-Schmidt algorithm for
+% computing the QR factorization of a m by n matrix A, where m>=n.
+
+clear all;
+%m equally spaced points over [0,1]
+m = 4; n=4;
+% Vandermonde matrix B
+t = zeros(m,n);
+for i = 1:n
+    for j = 1:m
+        t(j,i) = ((j-1)/(m-1))^(n-i);
+    end
+end
+%fliping the vandermonde matrix t to form A
+A = fliplr(t);
+
+%calling the function
+[q,r] = MGS(A);
+
+function [q,r] = MGS(A)
+
+    [m,n] = size(A);
+    
+    v = zeros(m,n);
+    r = zeros(n,n);
+    q = zeros(m,n);
+    
+    for i = 1:n
+        v(:,i) = A(:,i);
+    end
+    
+    for i = 1:n
+       r(i,i) = norm(v(:,i));
+       q(:,i) = v(:,i)/r(
+       
+    end
+
+end

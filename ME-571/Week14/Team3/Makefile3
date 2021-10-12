@@ -1,0 +1,8 @@
+APPS=test_team3
+
+all: ${APPS}
+
+%: %.cu
+	nvcc -o $@ $<
+clean:
+	rm -f ${APPS}

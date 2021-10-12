@@ -1,0 +1,557 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/MacPorts 2020.54632_3) (preloaded format=pdflatex 2021.3.20)  3 APR 2021 12:44
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**main.tex
+(./main.tex
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-03-06>
+(/opt/local/share/texmf-texlive/tex/latex/base/article.cls
+Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+(/opt/local/share/texmf-texlive/tex/latex/base/size11.clo
+File: size11.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+)
+\c@part=\count167
+\c@section=\count168
+\c@subsection=\count169
+\c@subsubsection=\count170
+\c@paragraph=\count171
+\c@subparagraph=\count172
+\c@figure=\count173
+\c@table=\count174
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+)
+(/opt/local/share/texmf-texlive/tex/latex/base/inputenc.sty
+Package: inputenc 2018/08/11 v1.3c Input encoding file
+\inpenc@prehook=\toks15
+\inpenc@posthook=\toks16
+)
+(/opt/local/share/texmf-texlive/tex/latex/base/fontenc.sty
+Package: fontenc 2020/02/11 v2.0o Standard LaTeX package
+)
+(/opt/local/share/texmf-texlive/tex/latex/psnfss/mathpazo.sty
+Package: mathpazo 2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
+\symupright=\mathgroup4
+)
+(/opt/local/share/texmf-texlive/tex/latex/l3backend/l3backend-pdfmode.def
+File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count175
+\l__pdf_internal_box=\box45
+)
+(./main.aux)
+\openout1 = `main.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Trying to load font information for T1+ppl on input line 42
+.
+ (/opt/local/share/texmf-texlive/tex/latex/psnfss/t1ppl.fd
+File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
+)
+! Font T1/ppl/m/n/10.95=pplr8t at 10.95pt not loadable: Metric (TFM) file not f
+ound.
+<to be read again> 
+                   relax 
+l.42 \begin{document}
+                     
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+\big@size=\dimen135
+! Font T1/ppl/m/sc/10.95=pplrc8t at 10.95pt not loadable: Metric (TFM) file not
+ found.
+<to be read again> 
+                   relax 
+l.57 	\textsc{\LARGE Institution Name}
+                                      \\[1.5cm] % Main heading such as the n...
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font T1/ppl/m/sc/17.28=pplrc8t at 17.28pt not loadable: Metric (TFM) file not
+ found.
+<to be read again> 
+                   relax 
+l.57 	\textsc{\LARGE Institution Name}
+                                      \\[1.5cm] % Main heading such as the n...
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+Missing character: There is no I in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no N in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+! Font T1/ppl/m/sc/14.4=pplrc8t at 14.4pt not loadable: Metric (TFM) file not f
+ound.
+<to be read again> 
+                   relax 
+l.59 	\textsc{\Large Major Heading}
+                                   \\[0.5cm] % Major heading such as course ...
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+Missing character: There is no M in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no j in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no H in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+! Font T1/ppl/m/sc/12=pplrc8t at 12.0pt not loadable: Metric (TFM) file not fou
+nd.
+<to be read again> 
+                   relax 
+l.61 	\textsc{\large Minor Heading}
+                                   \\[0.5cm] % Minor heading such as course ...
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+Missing character: There is no M in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no H in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+! Font T1/ppl/m/n/20.74=pplr8t at 20.74pt not loadable: Metric (TFM) file not f
+ound.
+<to be read again> 
+                   relax 
+l.69 	{\huge
+            \bfseries An Unnecessarily Convoluted Academic Title}\\[0.4cm] %...
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font T1/ppl/b/n/20.74=pplb8t at 20.74pt not loadable: Metric (TFM) file not f
+ound.
+<to be read again> 
+                   relax 
+l.69 	{\huge\bfseries
+                      An Unnecessarily Convoluted Academic Title}\\[0.4cm] %...
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no U in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no C in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no A in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no T in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+! Font T1/ppl/m/n/12=pplr8t at 12.0pt not loadable: Metric (TFM) file not found
+.
+<to be read again> 
+                   relax 
+l.79 			\large
+              
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font T1/ppl/m/it/12=pplri8t at 12.0pt not loadable: Metric (TFM) file not fou
+nd.
+<to be read again> 
+                   relax 
+l.80 			\textit{Author}
+                       \\
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no B in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no J in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no B in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no z in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no z in font nullfont!
+LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 8
+3.
+(/opt/local/share/texmf-texlive/tex/latex/psnfss/ot1ppl.fd
+File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
+)
+! Font OT1/ppl/m/n/10.95=pplr7t at 10.95pt not loadable: Metric (TFM) file not 
+found.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font OT1/ppl/m/n/8=pplr7t at 8.0pt not loadable: Metric (TFM) file not found.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font OT1/ppl/m/n/6=pplr7t at 6.0pt not loadable: Metric (TFM) file not found.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+LaTeX Font Info:    Trying to load font information for OML+zplm on input line 
+83.
+(/opt/local/share/texmf-texlive/tex/latex/psnfss/omlzplm.fd
+File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
+)
+! Font OML/zplm/m/it/10.95=zplmr7m at 10.95pt not loadable: Metric (TFM) file n
+ot found.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font OML/zplm/m/it/8=zplmr7m at 8.0pt not loadable: Metric (TFM) file not fou
+nd.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font OML/zplm/m/it/6=zplmr7m at 6.0pt not loadable: Metric (TFM) file not fou
+nd.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 
+83.
+(/opt/local/share/texmf-texlive/tex/latex/psnfss/omszplm.fd
+File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
+)
+! Font OMS/zplm/m/n/10.95=zplmr7y at 10.95pt not loadable: Metric (TFM) file no
+t found.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font OMS/zplm/m/n/8=zplmr7y at 8.0pt not loadable: Metric (TFM) file not foun
+d.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font OMS/zplm/m/n/6=zplmr7y at 6.0pt not loadable: Metric (TFM) file not foun
+d.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 
+83.
+(/opt/local/share/texmf-texlive/tex/latex/psnfss/omxzplm.fd
+File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
+)
+! Font OMX/zplm/m/n/10.95=zplmr7v at 10.95pt not loadable: Metric (TFM) file no
+t found.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font OMX/zplm/m/n/8=zplmr7v at 8.0pt not loadable: Metric (TFM) file not foun
+d.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font OMX/zplm/m/n/6=zplmr7v at 6.0pt not loadable: Metric (TFM) file not foun
+d.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 
+83.
+(/opt/local/share/texmf-texlive/tex/latex/psnfss/ot1zplm.fd
+File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
+)
+! Font OT1/zplm/m/n/10.95=zplmr7t at 10.95pt not loadable: Metric (TFM) file no
+t found.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font OT1/zplm/m/n/8=zplmr7t at 8.0pt not loadable: Metric (TFM) file not foun
+d.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Font OT1/zplm/m/n/6=zplmr7t at 6.0pt not loadable: Metric (TFM) file not foun
+d.
+<to be read again> 
+                   relax 
+l.83 	\end{minipage}
+                    
+I wasn't able to read the size data for this font,
+so I will ignore the font specification.
+[Wizards can fix TFM files using TFtoPL/PLtoTF.]
+You might try inserting a different font spec;
+e.g., type `I\font<same font id>=<substitute font name>'.
+
+! Math formula deleted: Insufficient symbol fonts.
+<inserted text> \setbox \z@ \vbox {\hbox {$($
+                                             }\kern \z@ }\global \big@size 1...
+l.83 	\end{minipage}
+                    
+Sorry, but I can't typeset math unless \textfont 2
+and \scriptfont 2 and \scriptscriptfont 2 have all
+the \fontdimen values needed in math symbol fonts.
+
+! Math formula deleted: Insufficient symbol fonts.
+\@iiiparbox ...bm@#3\endcsname }\if@pboxsw \m@th $
+                                                  \fi \@end@tempboxa 
+l.83 	\end{minipage}
+                    
+Sorry, but I can't typeset math unless \textfont 2
+and \scriptfont 2 and \scriptscriptfont 2 have all
+the \fontdimen values needed in math symbol fonts.
+
+Missing character: There is no S in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no C in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no B in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no k in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+! Math formula deleted: Insufficient symbol fonts.
+\@iiiparbox ...bm@#3\endcsname }\if@pboxsw \m@th $
+                                                  \fi \@end@tempboxa 
+l.91 	\end{minipage}
+                    
+Sorry, but I can't typeset math unless \textfont 2
+and \scriptfont 2 and \scriptscriptfont 2 have all
+the \fontdimen values needed in math symbol fonts.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+[1
+
+] (./main.aux) ) 
+Here is how much of TeX's memory you used:
+ 805 strings out of 482556
+ 11112 string characters out of 5952075
+ 235614 words of memory out of 5000000
+ 16490 multiletter control sequences out of 15000+600000
+ 533407 words of font info for 26 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 23i,4n,22p,165b,239s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on main.pdf (1 page, 993 bytes).
+PDF statistics:
+ 8 PDF objects out of 1000 (max. 8388607)
+ 4 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

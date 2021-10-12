@@ -1,0 +1,266 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>no2b</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-23"><meta name="DC.source" content="no2b.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">% Compute the weighted least squares solution using the diagonal Gaussian</span>
+<span class="comment">% weight with t = 1/23</span>
+clear <span class="string">all</span>
+close <span class="string">all</span>
+
+tex = 1/23;
+delta = 1;
+
+<span class="comment">%exact approximation</span>
+fex = cos(4*tex);
+
+<span class="comment">%Guassian function</span>
+w = @(t,tj,delta) exp(-(abs(t - tj)/delta).^2);
+
+<span class="comment">%m equally spaced points over [0,1]</span>
+m = 50; n=12;
+
+<span class="comment">% Vandermonde matrix t</span>
+t = zeros(m,n);
+<span class="keyword">for</span> i = 1:n
+    <span class="keyword">for</span> j = 1:m
+        t(j,i) = ((j-1)/(m-1))^(n-i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%fliping the vandermonde matrix t to form A</span>
+A = fliplr(t);
+
+<span class="comment">%fuction f</span>
+tj = zeros(m,1);
+<span class="keyword">for</span> j = 1:m
+    tj(j) = (j-1)/(m-1);
+
+<span class="keyword">end</span>
+
+f = cos(4*tj);
+
+<span class="comment">%Compute the weighted least square Using the Diagonal Gaussian  weight, W</span>
+W = diag(w(tex,tj,delta));
+
+format <span class="string">long</span>
+<span class="comment">%Report the polynomial coefficients of the weighted least squares solution.</span>
+fprintf(<span class="string">'Polynomial coefficients of the weighted least squares solution \n'</span>);
+[qw,rw] = qr(W*A); xw = rw\(qw'*(W*f))
+
+<span class="comment">%Non Weighted least squares solution xh</span>
+fprintf(<span class="string">'Polynomial coefficeients non weighted least squares solution \n'</span>);
+[q,r] = qr(A); xh = r\(q'*f)
+
+<span class="comment">%Report the value of the polynomial with these coefficients at t =1/23</span>
+<span class="comment">% Vandermonde matrix t</span>
+tc = zeros(m,n);
+<span class="keyword">for</span> i = 1:n
+    <span class="keyword">for</span> j = 1:m
+        tc(j,i) = (1/23)^(n-i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%fliping the vandermonde matrix t to form A</span>
+Ac = fliplr(tc);
+
+<span class="comment">%value of the polynomial at t =1/23</span>
+pw = Ac*xw; pw(11);
+fprintf(<span class="string">'Polynomial value computed using weighted coeffieients:'</span>)
+disp(pw(11));
+
+<span class="comment">%Compare these coefficients</span>
+<span class="comment">%for non weighted coefficients</span>
+pnonw = Ac*xh; pnonw(11);
+fprintf(<span class="string">'Polynomial value computed using non-weighted coeffieients:'</span>);
+disp(pnonw(11));
+fprintf(<span class="string">'Exact Polynomial value computed directly:'</span>)
+disp(fex)
+<span class="comment">%Which method provides better approximation?</span>
+fprintf(<span class="string">'Comparing the three polynomial values, its clear that the onw computed with the weighted \n coefficients best approximates the polynomial compared to the one computed with non-weighted coefficients.\n'</span>)
+</pre><pre class="codeoutput">Polynomial coefficients of the weighted least squares solution 
+
+xw =
+
+   1.000000000624414
+  -0.000000284232230
+  -7.999986974996736
+  -0.000227372752382
+  10.668683630048903
+  -0.010250539427060
+  -5.657718013285455
+  -0.054936278918560
+   1.668544782170136
+   0.025157808795187
+  -0.382483093694967
+   0.089572717334469
+
+Polynomial coefficeients non weighted least squares solution 
+
+xh =
+
+   1.000000000996605
+  -0.000000422742916
+  -7.999981235689359
+  -0.000318763182124
+  10.669430795534385
+  -0.013820286397571
+  -5.647075631757315
+  -0.075316016420060
+   1.693606954334381
+   0.006032115361104
+  -0.374241706147935
+   0.088040576549043
+
+Polynomial value computed using weighted coeffieients:   0.984915205139420
+
+Polynomial value computed using non-weighted coeffieients:   0.984915205008979
+
+Exact Polynomial value computed directly:   0.984915205128733
+
+Comparing the three polynomial values, its clear that the onw computed with the weighted 
+ coefficients best approximates the polynomial compared to the one computed with non-weighted coefficients.
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Compute the weighted least squares solution using the diagonal Gaussian
+% weight with t = 1/23
+clear all
+close all
+
+tex = 1/23;
+delta = 1;
+
+%exact approximation
+fex = cos(4*tex);
+
+%Guassian function
+w = @(t,tj,delta) exp(-(abs(t - tj)/delta).^2);
+
+%m equally spaced points over [0,1]
+m = 50; n=12;
+
+% Vandermonde matrix t
+t = zeros(m,n);
+for i = 1:n
+    for j = 1:m
+        t(j,i) = ((j-1)/(m-1))^(n-i);
+    end
+end
+
+%fliping the vandermonde matrix t to form A
+A = fliplr(t);
+
+%fuction f
+tj = zeros(m,1);
+for j = 1:m
+    tj(j) = (j-1)/(m-1);
+    
+end
+
+f = cos(4*tj);
+
+%Compute the weighted least square Using the Diagonal Gaussian  weight, W
+W = diag(w(tex,tj,delta));
+
+format long
+%Report the polynomial coefficients of the weighted least squares solution.
+fprintf('Polynomial coefficients of the weighted least squares solution \n');
+[qw,rw] = qr(W*A); xw = rw\(qw'*(W*f))
+
+%Non Weighted least squares solution xh
+fprintf('Polynomial coefficeients non weighted least squares solution \n');
+[q,r] = qr(A); xh = r\(q'*f)
+
+%Report the value of the polynomial with these coefficients at t =1/23
+% Vandermonde matrix t
+tc = zeros(m,n);
+for i = 1:n
+    for j = 1:m
+        tc(j,i) = (1/23)^(n-i);
+    end
+end
+
+%fliping the vandermonde matrix t to form A
+Ac = fliplr(tc); 
+
+%value of the polynomial at t =1/23
+pw = Ac*xw; pw(11);
+fprintf('Polynomial value computed using weighted coeffieients:')
+disp(pw(11));
+
+%Compare these coefficients 
+%for non weighted coefficients
+pnonw = Ac*xh; pnonw(11);
+fprintf('Polynomial value computed using non-weighted coeffieients:');
+disp(pnonw(11));
+fprintf('Exact Polynomial value computed directly:')
+disp(fex)
+%Which method provides better approximation?
+fprintf('Comparing the three polynomial values, its clear that the onw computed with the weighted \n coefficients best approximates the polynomial compared to the one computed with non-weighted coefficients.\n')
+
+##### SOURCE END #####
+--></body></html>

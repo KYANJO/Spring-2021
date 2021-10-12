@@ -1,0 +1,4 @@
+Matrix size: nx 32 ny 32
+host 0.143222 gpu 0.142213, err = 7.044500e-03
+Arrays do not match.
+

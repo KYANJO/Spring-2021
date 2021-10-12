@@ -1,0 +1,181 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>N01</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-04-20"><meta name="DC.source" content="N01.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">% Generalize Minimum Residual (GMRES) method for solving Ax = b</span>
+clear
+close <span class="string">all</span>
+
+<span class="comment">%dimensions of A</span>
+m = 200;
+<span class="comment">%matrix A</span>
+A = 2*eye(m) + 0.5*randn(m)/sqrt(m);
+<span class="comment">%vector b</span>
+b = ones(m,1);
+<span class="comment">%tolerance</span>
+tol = 1e-10;
+X = GMRES(A,b,tol);
+
+<span class="comment">%x = gmres(A,b);</span>
+
+<span class="keyword">function</span> X = GMRES(A,b,tol)
+    m = length(A);
+    q = zeros(m,m);
+    h = zeros(m,m);
+    nb = norm(b,2);
+    q(:,1)= b/nb;
+
+    <span class="keyword">for</span> n = 1:m
+        v = A*q(:,n);
+        <span class="keyword">for</span> j = 1:n
+           h(j,n) = q(:,j)'*v;
+           v = v - h(j,n)*q(:,j);
+        <span class="keyword">end</span>
+        h(n+1,n) = norm(v,2);
+        q(:,n+1) = v/h(n+1,n);
+        H = h(1:n+1,1:n);
+
+        b1=nb*speye(n+1,1);
+        y = H\b1;
+        xn = q(:,1:n)*y;
+
+        <span class="comment">%calculated the residual</span>
+        r = A*xn - b;
+
+       <span class="comment">%relative residual</span>
+        R = norm(r,2)/nb;
+
+        iter = n;
+        <span class="keyword">if</span> (norm(r,2) &lt;nb * tol)
+            <span class="keyword">break</span>
+        <span class="keyword">end</span>
+
+    <span class="keyword">end</span>
+    fprintf(<span class="string">"The code converged at %d iterations to solution with relative residual %e\n"</span>,iter,R);
+
+    X = xn;
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">The code converged at 17 iterations to solution with relative residual 2.324489e-11
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Generalize Minimum Residual (GMRES) method for solving Ax = b 
+clear 
+close all
+
+%dimensions of A 
+m = 200;
+%matrix A
+A = 2*eye(m) + 0.5*randn(m)/sqrt(m); 
+%vector b
+b = ones(m,1);
+%tolerance
+tol = 1e-10;
+X = GMRES(A,b,tol);
+
+%x = gmres(A,b);
+
+function X = GMRES(A,b,tol)
+    m = length(A);
+    q = zeros(m,m);
+    h = zeros(m,m);
+    nb = norm(b,2);
+    q(:,1)= b/nb;
+    
+    for n = 1:m
+        v = A*q(:,n);
+        for j = 1:n
+           h(j,n) = q(:,j)'*v;
+           v = v - h(j,n)*q(:,j);
+        end
+        h(n+1,n) = norm(v,2);
+        q(:,n+1) = v/h(n+1,n);
+        H = h(1:n+1,1:n);
+        
+        b1=nb*speye(n+1,1); 
+        y = H\b1;
+        xn = q(:,1:n)*y;
+        
+        %calculated the residual
+        r = A*xn - b;
+        
+       %relative residual
+        R = norm(r,2)/nb;
+        
+        iter = n;      
+        if (norm(r,2) <nb * tol)
+            break
+        end
+          
+    end
+    fprintf("The code converged at %d iterations to solution with relative residual %e\n",iter,R);
+
+    X = xn;
+end
+
+##### SOURCE END #####
+--></body></html>

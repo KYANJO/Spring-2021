@@ -1,0 +1,22 @@
+#!/bin/bash
+###
+###
+#SBATCH --time=00:10:00
+#SBATCH --tasks=1
+#SBATCH --job-name=cuda
+#SBATCH --output=output.o%j
+#SBATCH -p gpuq
+
+echo "N,time" >> task3_2.csv
+#for i in 0 1 2 3 4 5 6 7 8 10  
+./task3_2 1000 >> task3_2.csv
+./task3_2 100000 >> task3_2.csv
+./task3_2 1000000 >> task3_2.csv
+./task3_2 10000000 >> task3_2.csv
+./task3_2 1000000000 >> task3_2.csv
+#done
+
+status=$?
+if [ $status -ne 0 ]; then
+    exit $status
+fi

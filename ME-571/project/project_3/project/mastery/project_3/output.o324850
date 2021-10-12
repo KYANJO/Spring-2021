@@ -1,0 +1,1 @@
+/cm/local/apps/slurm/var/spool/job324850/slurm_script: line 13: 10251 Segmentation fault      (core dumped) ./mastery_gpu 32

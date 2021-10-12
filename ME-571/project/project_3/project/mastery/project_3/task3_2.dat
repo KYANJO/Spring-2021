@@ -1,0 +1,25 @@
+Matrix size: nx 2048 ny 2048
+matmul elapsed 58.024090 sec
+matmulOnGPU <<<(1,2048), (1,1)>>> elapsed 2.487412 sec
+Arrays match.
+
+Matrix size: nx 2048 ny 2048
+matmul elapsed 58.343574 sec
+matmulOnGPU <<<(1,128), (1,16)>>> elapsed 0.490041 sec
+Arrays match.
+
+Matrix size: nx 2048 ny 2048
+matmul elapsed 58.447970 sec
+matmulOnGPU <<<(1,32), (1,64)>>> elapsed 0.509116 sec
+Arrays match.
+
+Matrix size: nx 2048 ny 2048
+matmul elapsed 58.680926 sec
+matmulOnGPU <<<(1,8), (1,256)>>> elapsed 0.972910 sec
+Arrays match.
+
+Matrix size: nx 2048 ny 2048
+matmul elapsed 58.374124 sec
+matmulOnGPU <<<(1,2), (1,1024)>>> elapsed 9.173992 sec
+Arrays match.
+

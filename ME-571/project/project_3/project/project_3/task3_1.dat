@@ -1,0 +1,25 @@
+Matrix size: nx 32 ny 32
+matmul elapsed 0.000136 sec
+matmulOnGPU <<<(1,32), (1,1)>>> elapsed 0.000073 sec
+Arrays match.
+
+Matrix size: nx 32 ny 32
+matmul elapsed 0.000140 sec
+matmulOnGPU <<<(1,2), (1,16)>>> elapsed 0.000077 sec
+Arrays match.
+
+Matrix size: nx 32 ny 32
+matmul elapsed 0.000123 sec
+matmulOnGPU <<<(1,1), (1,64)>>> elapsed 0.000092 sec
+Arrays match.
+
+Matrix size: nx 32 ny 32
+matmul elapsed 0.000146 sec
+matmulOnGPU <<<(1,1), (1,256)>>> elapsed 0.000090 sec
+Arrays match.
+
+Matrix size: nx 32 ny 32
+matmul elapsed 0.000112 sec
+matmulOnGPU <<<(1,1), (1,1024)>>> elapsed 0.000089 sec
+Arrays match.
+

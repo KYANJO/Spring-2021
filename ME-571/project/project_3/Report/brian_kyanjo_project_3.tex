@@ -1,0 +1,243 @@
+\documentclass[12pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% packages %%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[all]{xy}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=1.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{psfrag}
+
+
+%%%%%%%%%%%%%%%%%%%%% students data %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\student}{Brian KYANJO }
+\newcommand{\course}{Parallel Scientific Computing}
+\newcommand{\assignment}{3}
+
+%%%%%%%%%%%%%%%%%%% using theorem style %%%%%%%%%%%%%%%%%%%%
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{definition}{Definition}[section] 
+\newtheorem{theorem}{Theorem}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{quest}{Question}[section]
+
+%%%%%%%%%%%%%%  Shortcut for usual set of numbers  %%%%%%%%%%%
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%% title page %%%%%%%%%%%%%%%%%%%%%%%%%%
+	\thispagestyle{empty}
+	\begin{center}
+		\textbf{BOISE STATE UNIVERSITY \\[0.5cm]
+			(BSU, USA)}
+		\vspace{.2cm}
+	\end{center}
+	
+	%%%%%%%%%%%%%%%%%%%%% assignment information %%%%%%%%%%%%%%%%
+	\noindent
+	\rule{17cm}{0.2cm}\\[0.3cm]
+	Name: \student \hfill Project Number: \assignment\\[0.1cm]
+	Course: \course \hfill Date: \today\\
+	\rule{17cm}{0.05cm}
+	\vspace{.2cm}
+
+\section*{Problem description}
+l have explored different ways to compute matrix multiplication on a GPU using CUDA. The multiplication of two matrices A and B (we assume they are square) is another square matrix C, such that:
+
+\begin{equation}
+C_{ij} = \sum_{k=0}^{N-1} A_{ik} B_{kj}
+\end{equation}
+
+\noindent where $N$ is the matrix size (i.e. $A, B, C \in \R^{N\times N}$),  the first and second index in the subscript enumerates row and column of a matrix respectively. 
+
+\section*{Task 1 - Monolithic approach}
+
+\begin{enumerate}
+	\item The provided serial code for matrix-matrix multiplication has been used to create a CUDA code which follows the CUDA programing model (allocate arrays on the device, move data to the device, execute kernel, copy result to host, free memory on the device) named\textbf{ matmul\textunderscore task1.cu}
+	
+	\item A problem size  of N = 32 with one block of 1024 threads has been used to run the kernel (\textbf{matmulOnGPU}). And it was confirmed that the kernel produces the same results as the serial code  \textbf{matmul} as depicted in figure \ref{fig:t12}  below. 
+	
+		\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"t12"}
+		\caption{Shows the output from the serial code and the kernel}
+		\label{fig:t12}
+	\end{figure}
+
+	\item When a problem size $(N = 64)$ larger than $N = 32$ was used, with one block and $1024$ threads, the code prints out an execption shown in figure \ref{fig:N>32}
+	
+		\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"N>32"}
+		\caption{$N > 32$}
+		\label{fig:N>32}
+	\end{figure}
+\noindent When  the number of threads $(4096)$ are increased to match the new problem size  $(N = 64)$
+leaving the grid size constant, again the code prints out an execption as shown in figure \ref{fig:iN}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{"iN"}
+	\caption{$N$ matching the number of threads.}
+	\label{fig:iN}
+\end{figure}
+	
+\item The entire CUDA code (including memory transfers) was timed and compared with the serial code. The timing results  are shown in table \ref{table1}.  
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline 
+	\textbf{	Codes} & \textbf{N} & \textbf{Elapsed time} \\ 
+		\hline 
+		Serial & 32 & 0.000176  \\ 
+		\hline 
+		Cuda & 32 & 0.180669  \\ 
+		\hline 
+	\end{tabular} 
+\caption{Timing results from both Serial and Cuda codes.}
+\label{table1}
+\end{table}
+
+Device acceleration does not give  any benefit for a single small matrix multiplication, since much time is spent on transfering the data between the host and the device, which is not accounted for in the serial code.
+
+\end{enumerate}
+
+\section*{Task 2 - 2D grid of 2D blocks decomposition}
+\begin{enumerate}
+	\item The 2D-2D matrix-multiplication algorithm in CUDA (\textbf{ matmul\textunderscore task2.cu}) was implemented and we confirmed that it gives the  same result as the serial code. Its output has been displayed in figure \ref{fig:t21} below.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"t21"}
+		\caption{$N$ matching the number of threads.}
+		\label{fig:t21}
+	\end{figure}
+	
+	\item A large problem size $N = 2 ^{11}$ has been used, with a few block configurations as shown in table \ref{table2}. The timing results displayed in table \ref{table2}  for Cuda, is kernel time only. All the results obtained are correct and they are saved in a file name \textbf{task2.dat}, and its comparision with serial code is depicted in table \ref{table2}.
+		
+	\begin{table}[H]
+		\centering
+	\begin{tabular}{|c|c|c|}
+		\hline 
+		\textbf{Block Configuration} & \textbf{Elapsed time (Cuda) sec}& \textbf{Elapsed time (Serial) sec} \\ 
+		\hline 
+		$32 \times 32$&0.056697  &58.261000  \\ 
+		\hline 
+		$16 \times 16$&0.059276  & 58.703160 \\ 
+		\hline 
+		$8 \times 8$& 0.071871 & 58.481528 \\ 
+		\hline 
+		$4 \times 4$&0.151849  &58.427382  \\ 
+		\hline 
+		$1 \times 1$&1.555273  & 58.463656 \\ 
+		\hline 
+	\end{tabular} 
+	\caption{Timing results from both Serial and Cuda codes.}
+	\label{table2}
+	\end{table}
+ The table \ref{table2} above represents that Cuda timing results, raise as the block configuration decreases with a fixed big grid $(2 ^{11} \times 2 ^{11})$. However, its still much better than the matrix multiplication in the serial code, since the time taken by the serial code is almost a minute. Hence, we conclude by choosing Cuda with any block configuration, because it will still be much computationally cheap and fast compared to the serial code.
+ 
+\end{enumerate}
+
+
+\section*{Task 3 - 1D-1D decomposition}
+\begin{enumerate}
+	\item The 1D-1D decomposition for CUDA matrix multiplication named \textbf{matmul\textunderscore task2.cu} was implemented and compared with the serial code as shown in figure \ref{fig:t31}. 
+	
+		\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"t31"}
+		\caption{1D-1D decomposition for CUDA matrix multiplication.}
+		\label{fig:t31}
+	\end{figure}
+	
+	\item The same problem size as in Task 2 has been used and only the kernel is timed  for different configurations of threads per block (i.e. 1, 16, 64, 256, 1024), and correct results \textbf{(task3\textunderscore2.dat)} where obtained. Results are compared with Task 2 as shown in  figure \ref{fig:t32}.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\linewidth]{"t33"}
+		\caption{Task2 and Task3 kernel timings.}
+		\label{fig:t32}
+	\end{figure}
+	
+	\item According to figure \ref{fig:t32}, task2 (blue) performs much better than task3(orange) computationwise as the number of threads increases. On this note i would choose a 2D-2D decomposition approach with 1024 by 1024 configuration, since the more the threads the fast and cheaper the code becomes. I conclude that 2D-2D performs better than 1D-1D, with all configurations.
+	
+\end{enumerate}
+
+\section*{Mastery}
+\begin{enumerate}
+	\item The serial code together with CUDA kernel code (\textbf{mastery\textunderscore1.cu}) performing matrix-vector product $b = Ax$ has been implemented, and its correctness has been tested as shown in figure \ref{fig:tm1} . I used a 1D-1D block decomposition, since it gave the least simulation time, durring all runs i performed on the other decompositions.
+	
+	Explain your choice of block-thread decomposition.
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"tm1"}
+		\caption{Matrix vector multiplication}
+		\label{fig:tm1}
+	\end{figure}
+	
+	\item The serial code together with CUDA kernel code (\textbf{mastery\textunderscore2.cu}) performing euclidian norm of a vector has been implemented, and its correctness has been tested as shown in figure \ref{fig:tm2} . 
+	
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"tm2"}
+		\caption{Euclidean norm.}
+		\label{fig:tm2}
+	\end{figure}
+
+   \item The normalization kernel (\textbf{mastery\textunderscore3.cu}), that divides each entry of vector b by its Euclidian norm has been implemented and results are proved as shown in figure \ref{fig:tm3}.
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"tm3"}
+		\caption{Normalisation of vector b.}
+		\label{fig:tm3}
+	\end{figure}
+
+	\item The serial power iteration code together with its kernel (\textbf{mastery\textunderscore serial\textunderscore gpu.cu}) has been implemented. And the results are depicted in \ref{fig:tm4}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"tm4"}
+		\caption{Power iteration for both serial and its kernel.}
+		\label{fig:tm4}
+	\end{figure}
+
+	\item Both the serial code and the CUDA code has been timed, and the results are depicted in the figure \ref{fig:tm5} below.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"tm5"}
+		\caption{Power iteration for both serial and its kernel.}
+		\label{fig:tm5}
+	\end{figure}
+	
+	I have used 2D-2D decomposition block thread decompostion, since it proved to give the optimal results for all runs i have performed, and also makes more threads available per block.
+
+	\item No,  since computation time for serial is still almost half of the kernel one. I think this can be improved by reducing on the amount of data transfers between the device and the host, since it seems to be more expensive than the actual calculations.
+
+\end{enumerate}
+	
+\end{document}
